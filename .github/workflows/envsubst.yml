@@ -13,7 +13,6 @@ on:
 jobs:
   checks:
     runs-on: ubuntu-latest
-    if: github.event_name == 'pull_request'
     steps:
       - name: Clone repository
         uses: actions/checkout@v4
@@ -26,4 +25,4 @@ jobs:
           NAME: World
       - name: Check result
         run: |
-          [ 'Hello, World!\n' = "$(cat result.txt)" ]
+          [ 'Hello, World!' = "$(cat result.txt)" ]
