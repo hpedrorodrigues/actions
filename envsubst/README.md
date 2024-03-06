@@ -41,8 +41,9 @@ spec:
 `.github/workflows/main.yml`
 
 ```yml
+...
 - name: Render template
-  uses: hpedrorodrigues/actions/envsubst@main
+  uses: hpedrorodrigues/actions/envsubst@v1
   with:
     template_file: template.yml
     result_file: deployment.yml
