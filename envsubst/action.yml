@@ -1,6 +1,6 @@
 name: envsubst
-description: simple action to run envsubst on a file
 author: Pedro Rodrigues
+description: simple action to run envsubst on a file
 inputs:
   template_file:
     description: Template file to process substitutions on
@@ -8,6 +8,9 @@ inputs:
   result_file:
     description: Result file with substitutions applied
     required: true
+branding:
+  icon: 'rotate-cw'
+  color: 'blue'
 runs:
   using: 'docker'
   image: 'Dockerfile'
