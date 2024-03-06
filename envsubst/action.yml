@@ -1,0 +1,13 @@
+name: envsubst
+description: simple action to run envsubst on a file
+author: Pedro Rodrigues
+inputs:
+  template_file:
+    description: Template file to process substitutions on
+    required: true
+  result_file:
+    description: Result file with substitutions applied
+    required: true
+runs:
+  using: 'docker'
+  image: 'Dockerfile'
