@@ -39,7 +39,7 @@ for i in $(seq '0' "$((input_size - 1))"); do
 
   if ${in_place}; then
     echo "Processing \"${input_item}\" (in-place)"
-    content=$(<"${input_item}")
+    content=$(cat "${input_item}")
     echo "${content}" | envsubst >"${input_item}"
   else
     output_item="$(eval echo "\$output_item_${i}")"
