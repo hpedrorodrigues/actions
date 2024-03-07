@@ -66,3 +66,13 @@ spec:
     APP_NAME: haproxy
     IMAGE: ${{ env.DOCKER_IMAGE }}:${{ github.sha }}
 ```
+
+**multiple files**
+
+```yml
+- name: Render templates
+  uses: hpedrorodrigues/actions/envsubst@main
+  with:
+    input: template.yml package.txt config.toml
+    output: result.yml output.txt result.toml
+```
