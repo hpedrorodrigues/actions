@@ -7,18 +7,16 @@ Simple wrapper action for running envsubst over a file or set of files.
 ```yaml
 - uses: hpedrorodrigues/actions/envsubst@main
   with:
-    # One or more files to apply substitutions on.
-    # Required: true
-    input: ''
+    # One or more files to apply substitutions on (separated by space).
+    input: ""
 
-    # One or more files to write the result to. If not provided, the result will be printed to stdout.
-    output: ''
+    # One or more files to write the result to (separated by space).
+    # If not provided, the result will be printed to stdout.
+    output: ""
 
-    # Perform in-place substitution. If true, the input files will be overwritten with the result.
-    # Cannot be used with the `output` parameter.
-    # Required: false
-    # Default: false
-    in_place: ''
+    # Whether to perform in-place substitutions.
+    # If true, the input files will be overwritten with the result.
+    in_place: ""
 ```
 
 ## Scenarios
@@ -65,7 +63,7 @@ Simple wrapper action for running envsubst over a file or set of files.
     output: result.yml
   env:
     BUILD_REF: ${{ github.sha }}
-    CUSTOM: 'static value'
+    CUSTOM: "static value"
 ```
 
 ### Apply substitutions and print result to stdout
