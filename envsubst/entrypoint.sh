@@ -7,28 +7,28 @@ if ${DEBUG:-false}; then
   set -o xtrace
 fi
 
-template_size=0
-for item in ${INPUT_TEMPLATE}; do
-  eval template_item_${template_size}="${item}"
-  template_size=$((template_size + 1))
+input_size=0
+for item in ${INPUT_INPUT}; do
+  eval input_item_${input_size}="${item}"
+  input_size=$((input_size + 1))
 done
 
-result_size=0
-for item in ${INPUT_RESULT}; do
-  eval result_item_${result_size}="${item}"
-  result_size=$((result_size + 1))
+output_size=0
+for item in ${INPUT_OUTPUT}; do
+  eval output_item_${output_size}="${item}"
+  output_size=$((output_size + 1))
 done
 
-if [ "${template_size}" -ne "${result_size}" ]; then
-  echo >&2 'Error: `template` and `result` must have the same number of items.'
-  echo >&2 "Got: template items=${template_size}, result items=${result_size}."
+if [ "${input_size}" -ne "${output_size}" ]; then
+  echo >&2 'Error: `input` and `output` must have the same number of items.'
+  echo >&2 "Got: input items=${input_size}, output items=${output_size}."
   exit 1
 fi
 
-for i in $(seq '0' "$((template_size - 1))"); do
-  template_item="$(eval echo "\$template_item_${i}")"
-  result_item="$(eval echo "\$result_item_${i}")"
+for i in $(seq '0' "$((input_size - 1))"); do
+  input_item="$(eval echo "\$input_item_${i}")"
+  output_item="$(eval echo "\$output_item_${i}")"
 
-  echo "Processing \"${template_item}\" -> \"${result_item}\""
-  envsubst <"${template_item}" >"${result_item}"
+  echo "Processing \"${input_item}\" -> \"${output_item}\""
+  envsubst <"${input_item}" >"${output_item}"
 done

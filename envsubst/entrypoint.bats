@@ -1,19 +1,19 @@
 #!/usr/bin/env bats
 
 setup() {
-  export JSON_TEMPLATE_FILE="${BATS_TEST_DIRNAME}/../.github/extra/envsubst/simple.template.json"
-  export TEXT_TEMPLATE_FILE="${BATS_TEST_DIRNAME}/../.github/extra/envsubst/simple.template.txt"
-  export MARKDOWN_TEMPLATE_FILE="${BATS_TEST_DIRNAME}/../.github/extra/envsubst/simple.template.md"
+  export JSON_INPUT_FILE="${BATS_TEST_DIRNAME}/../.github/extra/envsubst/simple.template.json"
+  export TEXT_INPUT_FILE="${BATS_TEST_DIRNAME}/../.github/extra/envsubst/simple.template.txt"
+  export MARKDOWN_INPUT_FILE="${BATS_TEST_DIRNAME}/../.github/extra/envsubst/simple.template.md"
 
-  export JSON_RESULT_FILE='result.json'
-  export TEXT_RESULT_FILE='result.text'
-  export MARKDOWN_RESULT_FILE='result.md'
+  export JSON_OUTPUT_FILE='result.json'
+  export TEXT_OUTPUT_FILE='result.text'
+  export MARKDOWN_OUTPUT_FILE='result.md'
 }
 
 teardown() {
-  ! [ -f "${JSON_RESULT_FILE}" ] || rm -f "${JSON_RESULT_FILE}"
-  ! [ -f "${TEXT_RESULT_FILE}" ] || rm -f "${TEXT_RESULT_FILE}"
-  ! [ -f "${MARKDOWN_RESULT_FILE}" ] || rm -f "${MARKDOWN_RESULT_FILE}"
+  ! [ -f "${JSON_OUTPUT_FILE}" ] || rm -f "${JSON_OUTPUT_FILE}"
+  ! [ -f "${TEXT_OUTPUT_FILE}" ] || rm -f "${TEXT_OUTPUT_FILE}"
+  ! [ -f "${MARKDOWN_OUTPUT_FILE}" ] || rm -f "${MARKDOWN_OUTPUT_FILE}"
 }
 
 main() {
@@ -22,21 +22,21 @@ main() {
 
 @test "Render single file" {
   # GitHub-provided environment variables
-  export INPUT_TEMPLATE="${TEXT_TEMPLATE_FILE}"
-  export INPUT_RESULT="${TEXT_RESULT_FILE}"
+  export INPUT_INPUT="${TEXT_INPUT_FILE}"
+  export INPUT_OUTPUT="${TEXT_OUTPUT_FILE}"
 
   # User-provided environment variables
   export NAME='World'
 
   run main
   [ "${status}" -eq 0 ]
-  [ 'Hello, World!' = "$(cat "${INPUT_RESULT}")" ]
+  [ 'Hello, World!' = "$(cat "${INPUT_OUTPUT}")" ]
 }
 
 @test "Render multiple files" {
   # GitHub-provided environment variables
-  export INPUT_TEMPLATE="${JSON_TEMPLATE_FILE} ${MARKDOWN_TEMPLATE_FILE}"
-  export INPUT_RESULT="${JSON_RESULT_FILE} ${MARKDOWN_RESULT_FILE}"
+  export INPUT_INPUT="${JSON_INPUT_FILE} ${MARKDOWN_INPUT_FILE}"
+  export INPUT_OUTPUT="${JSON_OUTPUT_FILE} ${MARKDOWN_OUTPUT_FILE}"
 
   # User-provided environment variables
   export JSON_VALUE='value'
@@ -44,17 +44,17 @@ main() {
 
   run main
   [ "${status}" -eq 0 ]
-  [ '{"key": "value"}' = "$(cat "${JSON_RESULT_FILE}")" ]
-  [ '# Awesome!' = "$(cat "${MARKDOWN_RESULT_FILE}")" ]
+  [ '{"key": "value"}' = "$(cat "${JSON_OUTPUT_FILE}")" ]
+  [ '# Awesome!' = "$(cat "${MARKDOWN_OUTPUT_FILE}")" ]
 }
 
-@test "Should fail when template and result doesn't have the same number of elements" {
+@test "Should fail when input and output doesn't have the same number of items" {
   # GitHub-provided environment variables
-  export INPUT_TEMPLATE="${JSON_TEMPLATE_FILE} ${MARKDOWN_TEMPLATE_FILE}"
-  export INPUT_RESULT="${JSON_RESULT_FILE}"
+  export INPUT_INPUT="${JSON_INPUT_FILE} ${MARKDOWN_INPUT_FILE}"
+  export INPUT_OUTPUT="${JSON_OUTPUT_FILE}"
 
   run main
   [ "${status}" -eq 1 ]
-  [ "${lines[0]}" = 'Error: `template` and `result` must have the same number of items.' ]
-  [ "${lines[1]}" = 'Got: template items=2, result items=1.' ]
+  [ "${lines[0]}" = 'Error: `input` and `output` must have the same number of items.' ]
+  [ "${lines[1]}" = 'Got: input items=2, output items=1.' ]
 }

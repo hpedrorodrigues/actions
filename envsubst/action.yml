@@ -1,11 +1,11 @@
 name: envsubst
 author: Pedro Rodrigues
-description: simple action to run envsubst on a file
+description: Simple wrapper action for envsubst.
 inputs:
-  template:
+  input:
     description: One or more template files to process substitutions on (separated by space).
     required: true
-  result:
+  output:
     description: One or more result files with substitutions applied (separated by space).
     required: true
 branding:
