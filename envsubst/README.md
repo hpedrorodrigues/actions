@@ -38,15 +38,29 @@ spec:
           image: ${IMAGE}
 ```
 
-`.github/workflows/main.yml`
+`action`
 
 ```yml
-...
 - name: Render template
   uses: hpedrorodrigues/actions/envsubst@main
   with:
     input: template.yml
     output: deployment.yml
+  env:
+    DEPLOYMENT_NAME: ${{ env.DEPLOYMENT_NAME }}
+    APP_NAME: haproxy
+    IMAGE: ${{ env.DOCKER_IMAGE }}:${{ github.sha }}
+
+```
+
+**in-place substitution**
+
+```yml
+- name: Render template
+  uses: hpedrorodrigues/actions/envsubst@main
+  with:
+    input: template.yml
+    in_place: true
   env:
     DEPLOYMENT_NAME: ${{ env.DEPLOYMENT_NAME }}
     APP_NAME: haproxy

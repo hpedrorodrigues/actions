@@ -1,1 +1,1 @@
-# ${TITLE}
+# Awesome!

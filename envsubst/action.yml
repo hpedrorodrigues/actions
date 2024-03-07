@@ -7,7 +7,12 @@ inputs:
     required: true
   output:
     description: One or more result files with substitutions applied (separated by space).
-    required: true
+    required: false
+    default: ''
+  in_place:
+    description: Whether to apply substitutions in place or not.
+    required: false
+    default: false
 branding:
   icon: 'rotate-cw'
   color: 'blue'
