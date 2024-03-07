@@ -7,10 +7,10 @@ GitHub Action to run envsubst on a file.
 
 ### Inputs
 
-| Name          | Description                                     | Required |
-| ------------- | ----------------------------------------------- | -------- |
-| template_file | Path to template file to apply substitutions on | true     |
-| result_file   | Path to result file with substitutions applied  | true     |
+| Name     | Description                                     | Required |
+|----------| ----------------------------------------------- | -------- |
+| template | Path to template file to apply substitutions on | true     |
+| result   | Path to result file with substitutions applied  | true     |
 
 ### Example
 
@@ -45,8 +45,8 @@ spec:
 - name: Render template
   uses: hpedrorodrigues/actions/envsubst@v1
   with:
-    template_file: template.yml
-    result_file: deployment.yml
+    template: template.yml
+    result: deployment.yml
   env:
     DEPLOYMENT_NAME: ${{ env.DEPLOYMENT_NAME }}
     APP_NAME: haproxy

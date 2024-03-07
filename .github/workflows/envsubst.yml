@@ -16,13 +16,24 @@ jobs:
     steps:
       - name: Clone repository
         uses: actions/checkout@v4
-      - name: Render template
+      - name: Render single template
         uses: hpedrorodrigues/actions/envsubst@main
         with:
-          template_file: .github/extra/template.txt
-          result_file: result.txt
+          template: .github/extra/envsubst/simple.template.txt
+          result: result.txt
         env:
           NAME: World
       - name: Check result
         run: |
           [ 'Hello, World!' = "$(cat result.txt)" ]
+      - name: Render multiple templates
+        uses: hpedrorodrigues/actions/envsubst@main
+        with:
+          template: .github/extra/envsubst/simple.template.json .github/extra/envsubst/simple.template.md
+          result: result.json result.md
+        env:
+          JSON_VALUE: value
+          TITLE: Awesome!
+      - name: Check results
+        run: |
+          [ '{"key": "value"}' = "$(cat result.json)" ] && [ '# Awesome!' = "$(cat result.md)" ]
