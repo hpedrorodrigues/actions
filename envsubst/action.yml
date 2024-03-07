@@ -3,14 +3,14 @@ author: Pedro Rodrigues
 description: Simple wrapper action for envsubst.
 inputs:
   input:
-    description: One or more template files to process substitutions on (separated by space).
+    description: One or more input files to apply substitutions to (separated by space).
     required: true
   output:
-    description: One or more result files with substitutions applied (separated by space).
+    description: One or more output files to write the result to (separated by space).
     required: false
     default: ''
   in_place:
-    description: Whether to apply substitutions in place or not.
+    description: Whether to apply the substitutions in place.
     required: false
     default: false
 branding:
