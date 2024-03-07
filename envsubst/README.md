@@ -7,10 +7,10 @@ GitHub Action to run envsubst on a file.
 
 ### Inputs
 
-| Name          | Description                                     | Required |
-| ------------- | ----------------------------------------------- | -------- |
-| template_file | Path to template file to apply substitutions on | true     |
-| result_file   | Path to result file with substitutions applied  | true     |
+| Name   | Description                                          | Required |
+|--------| ---------------------------------------------------- | -------- |
+| input  | One or more template files to apply substitutions on | true     |
+| output | One or more result files with substitutions applied  | true     |
 
 ### Example
 
@@ -38,17 +38,41 @@ spec:
           image: ${IMAGE}
 ```
 
-`.github/workflows/main.yml`
+`action`
 
 ```yml
-...
 - name: Render template
-  uses: hpedrorodrigues/actions/envsubst@v1
+  uses: hpedrorodrigues/actions/envsubst@main
   with:
-    template_file: template.yml
-    result_file: deployment.yml
+    input: template.yml
+    output: deployment.yml
   env:
     DEPLOYMENT_NAME: ${{ env.DEPLOYMENT_NAME }}
     APP_NAME: haproxy
     IMAGE: ${{ env.DOCKER_IMAGE }}:${{ github.sha }}
+
+```
+
+**in-place substitution**
+
+```yml
+- name: Render template
+  uses: hpedrorodrigues/actions/envsubst@main
+  with:
+    input: template.yml
+    in_place: true
+  env:
+    DEPLOYMENT_NAME: ${{ env.DEPLOYMENT_NAME }}
+    APP_NAME: haproxy
+    IMAGE: ${{ env.DOCKER_IMAGE }}:${{ github.sha }}
+```
+
+**multiple files**
+
+```yml
+- name: Render templates
+  uses: hpedrorodrigues/actions/envsubst@main
+  with:
+    input: template.yml package.txt config.toml
+    output: result.yml output.txt result.toml
 ```
