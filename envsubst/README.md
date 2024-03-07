@@ -43,7 +43,7 @@ spec:
 ```yml
 ...
 - name: Render template
-  uses: hpedrorodrigues/actions/envsubst@v1
+  uses: hpedrorodrigues/actions/envsubst@main
   with:
     template: template.yml
     result: deployment.yml
