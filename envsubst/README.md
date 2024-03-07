@@ -1,78 +1,77 @@
 # envsubst
 
-GitHub Action to run envsubst on a file.
+Simple wrapper action for running envsubst over a file or set of files.
 
-> [!NOTE]
-> This is a Docker-based action and may not work as expected on Windows and MacOS runners.
+## Usage
 
-### Inputs
+```yaml
+- uses: hpedrorodrigues/actions/envsubst@main
+  with:
+    # One or more files to apply substitutions on.
+    # Required: true
+    input: ''
 
-| Name   | Description                                          | Required |
-|--------| ---------------------------------------------------- | -------- |
-| input  | One or more template files to apply substitutions on | true     |
-| output | One or more result files with substitutions applied  | true     |
+    # One or more files to write the result to. If not provided, the result will be printed to stdout.
+    output: ''
 
-### Example
-
-`template.yml`
-
-```yml
-apiVersion: apps/v1
-kind: Deployment
-metadata:
-  name: ${DEPLOYMENT_NAME}
-  labels:
-    app: ${APP_NAME}
-spec:
-  replicas: 1
-  selector:
-    matchLabels:
-      app: ${APP_NAME}
-  template:
-    metadata:
-      labels:
-        app: ${APP_NAME}
-    spec:
-      containers:
-        - name: ${APP_NAME}
-          image: ${IMAGE}
+    # Perform in-place substitution. If true, the input files will be overwritten with the result.
+    # Cannot be used with the `output` parameter.
+    # Required: false
+    # Default: false
+    in_place: ''
 ```
 
-`action`
+## Scenarios
 
-```yml
-- name: Render template
-  uses: hpedrorodrigues/actions/envsubst@main
+- [Apply substitutions on a single file](#apply-substitutions-on-a-single-file)
+- [Apply substitutions on multiple files](#apply-substitutions-on-multiple-files)
+- [Apply substitutions in-place](#in-place-substitution)
+- [Apply substitutions with custom environment variables](#apply-substitutions-with-custom-environment-variables)
+- [Apply substitutions and print result to stdout](#apply-substitutions-and-print-result-to-stdout)
+
+### Apply substitutions on a single file
+
+```yaml
+- uses: hpedrorodrigues/actions/envsubst@main
   with:
     input: template.yml
     output: deployment.yml
-  env:
-    DEPLOYMENT_NAME: ${{ env.DEPLOYMENT_NAME }}
-    APP_NAME: haproxy
-    IMAGE: ${{ env.DOCKER_IMAGE }}:${{ github.sha }}
-
 ```
 
-**in-place substitution**
+### Apply substitutions on multiple files
 
-```yml
-- name: Render template
-  uses: hpedrorodrigues/actions/envsubst@main
-  with:
-    input: template.yml
-    in_place: true
-  env:
-    DEPLOYMENT_NAME: ${{ env.DEPLOYMENT_NAME }}
-    APP_NAME: haproxy
-    IMAGE: ${{ env.DOCKER_IMAGE }}:${{ github.sha }}
-```
-
-**multiple files**
-
-```yml
-- name: Render templates
-  uses: hpedrorodrigues/actions/envsubst@main
+```yaml
+- uses: hpedrorodrigues/actions/envsubst@main
   with:
     input: template.yml package.txt config.toml
     output: result.yml output.txt result.toml
+```
+
+### Apply substitutions in-place
+
+```yaml
+- uses: hpedrorodrigues/actions/envsubst@main
+  with:
+    input: deployment.yml
+    in_place: true
+```
+
+### Apply substitutions with custom environment variables
+
+```yaml
+- uses: hpedrorodrigues/actions/envsubst@main
+  with:
+    input: template.yml
+    output: result.yml
+  env:
+    BUILD_REF: ${{ github.sha }}
+    CUSTOM: 'static value'
+```
+
+### Apply substitutions and print result to stdout
+
+```yaml
+- uses: hpedrorodrigues/actions/envsubst@main
+  with:
+    input: template.yml
 ```

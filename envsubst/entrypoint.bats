@@ -20,7 +20,7 @@ main() {
   sh "${BATS_TEST_DIRNAME}/entrypoint.sh"
 }
 
-@test "Render single file" {
+@test 'Render single file' {
   # GitHub-provided environment variables
   export INPUT_INPUT="${TEXT_INPUT_FILE}"
   export INPUT_OUTPUT="${TEXT_OUTPUT_FILE}"
@@ -30,10 +30,10 @@ main() {
 
   run main
   [ "${status}" -eq 0 ]
-  [ 'Hello, World!' = "$(cat "${INPUT_OUTPUT}")" ]
+  [ "$(cat "${INPUT_OUTPUT}")" = 'Hello, World!' ]
 }
 
-@test "Render single file in-place" {
+@test 'Render single file (in-place)' {
   # GitHub-provided environment variables
   export INPUT_INPUT="${TEXT_INPUT_FILE}"
   export INPUT_OUTPUT=''
@@ -44,10 +44,26 @@ main() {
 
   run main
   [ "${status}" -eq 0 ]
-  [ 'Hello, World!' = "$(cat "${INPUT_INPUT}")" ]
+  [ "${output}" = "Processing \"${TEXT_INPUT_FILE}\" (in-place)" ]
+  [ "$(cat "${INPUT_INPUT}")" = 'Hello, World!' ]
 }
 
-@test "Render multiple files" {
+@test 'Render single file (stdout)' {
+  # GitHub-provided environment variables
+  export INPUT_INPUT="${TEXT_INPUT_FILE}"
+  export INPUT_OUTPUT=''
+  export INPUT_IN_PLACE='false'
+
+  # User-provided environment variables
+  export NAME='World'
+
+  run main
+  [ "${status}" -eq 0 ]
+  [ "${lines[0]}" = "Processing \"${TEXT_INPUT_FILE}\" (stdout)" ]
+  [ "${lines[1]}" = 'Hello, World!' ]
+}
+
+@test 'Render multiple files' {
   # GitHub-provided environment variables
   export INPUT_INPUT="${JSON_INPUT_FILE} ${MARKDOWN_INPUT_FILE}"
   export INPUT_OUTPUT="${JSON_OUTPUT_FILE} ${MARKDOWN_OUTPUT_FILE}"
@@ -58,11 +74,11 @@ main() {
 
   run main
   [ "${status}" -eq 0 ]
-  [ '{"key": "value"}' = "$(cat "${JSON_OUTPUT_FILE}")" ]
-  [ '# Awesome!' = "$(cat "${MARKDOWN_OUTPUT_FILE}")" ]
+  [ "$(cat "${JSON_OUTPUT_FILE}")" = '{"key": "value"}' ]
+  [ "$(cat "${MARKDOWN_OUTPUT_FILE}")" = '# Awesome!' ]
 }
 
-@test "Render multiple files in-place" {
+@test 'Render multiple files (in-place)' {
   # GitHub-provided environment variables
   export INPUT_INPUT="${JSON_INPUT_FILE} ${MARKDOWN_INPUT_FILE}"
   export INPUT_OUTPUT=''
@@ -74,11 +90,29 @@ main() {
 
   run main
   [ "${status}" -eq 0 ]
-  [ '{"key": "value"}' = "$(cat "${JSON_INPUT_FILE}")" ]
-  [ '# Awesome!' = "$(cat "${MARKDOWN_INPUT_FILE}")" ]
+  [ "$(cat "${JSON_INPUT_FILE}")" = '{"key": "value"}' ]
+  [ "$(cat "${MARKDOWN_INPUT_FILE}")" = '# Awesome!' ]
 }
 
-@test "Should fail when input and output doesn't have the same number of items" {
+@test 'Render multiple files (stdout)' {
+  # GitHub-provided environment variables
+  export INPUT_INPUT="${TEXT_INPUT_FILE} ${JSON_INPUT_FILE}"
+  export INPUT_OUTPUT=''
+  export INPUT_IN_PLACE='false'
+
+  # User-provided environment variables
+  export NAME='World'
+  export JSON_VALUE='value'
+
+  run main
+  [ "${status}" -eq 0 ]
+  [ "${lines[0]}" = "Processing \"${TEXT_INPUT_FILE}\" (stdout)" ]
+  [ "${lines[1]}" = 'Hello, World!' ]
+  [ "${lines[2]}" = "Processing \"${JSON_INPUT_FILE}\" (stdout)" ]
+  [ "${lines[3]}" = '{"key": "value"}' ]
+}
+
+@test "Should fail when \`input\` and \`output\` doesn't have the same number of items" {
   # GitHub-provided environment variables
   export INPUT_INPUT="${JSON_INPUT_FILE} ${MARKDOWN_INPUT_FILE}"
   export INPUT_OUTPUT="${JSON_OUTPUT_FILE}"
@@ -89,7 +123,7 @@ main() {
   [ "${lines[1]}" = 'Got: input items=2, output items=1.' ]
 }
 
-@test "Should fail when output and in_place are both provided" {
+@test 'Should fail when \`output\` and \`in_place\` are both provided' {
   # GitHub-provided environment variables
   export INPUT_INPUT="${JSON_INPUT_FILE}"
   export INPUT_OUTPUT="${JSON_OUTPUT_FILE}"
