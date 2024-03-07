@@ -7,10 +7,10 @@ GitHub Action to run envsubst on a file.
 
 ### Inputs
 
-| Name     | Description                                     | Required |
-|----------| ----------------------------------------------- | -------- |
-| template | Path to template file to apply substitutions on | true     |
-| result   | Path to result file with substitutions applied  | true     |
+| Name     | Description                                          | Required |
+| -------- | ---------------------------------------------------- | -------- |
+| template | One or more template files to apply substitutions on | true     |
+| result   | One or more result files with substitutions applied  | true     |
 
 ### Example
 

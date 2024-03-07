@@ -1,0 +1,16 @@
+name: Checks
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+jobs:
+  checks:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Clone repository
+        uses: actions/checkout@v4
+      - name: Set up BATS
+        uses: mig4/setup-bats@v1
+      - name: Run tests
+        run: bats --print-output-on-failure --timing --recursive .

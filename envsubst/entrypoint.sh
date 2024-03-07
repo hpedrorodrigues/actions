@@ -4,7 +4,9 @@ set -o errexit
 set -o nounset
 set -o pipefail
 
-set -x
+if ${DEBUG:-false}; then
+  set -o xtrace
+fi
 
 template_size=0
 for item in ${INPUT_TEMPLATE}; do
@@ -20,7 +22,7 @@ done
 
 if [ "${template_size}" -ne "${result_size}" ]; then
   echo >&2 'Error: `template` and `result` must have the same number of items.'
-  echo >&2 "Got: template items=${template_size}, result items=${result_size}"
+  echo >&2 "Got: template items=${template_size}, result items=${result_size}."
   exit 1
 fi
 
