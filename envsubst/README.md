@@ -23,7 +23,7 @@ Simple wrapper action for running envsubst over a file or set of files.
 
 - [Apply substitutions on a single file](#apply-substitutions-on-a-single-file)
 - [Apply substitutions on multiple files](#apply-substitutions-on-multiple-files)
-- [Apply substitutions in-place](#in-place-substitution)
+- [Apply substitutions in-place](#apply-substitutions-in-place)
 - [Apply substitutions with custom environment variables](#apply-substitutions-with-custom-environment-variables)
 - [Apply substitutions and print result to stdout](#apply-substitutions-and-print-result-to-stdout)
 
