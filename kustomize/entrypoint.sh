@@ -29,8 +29,11 @@ case "${detection}" in
     fi
     ;;
   git-diff)
+    readonly changed_files="$(
+      git diff --diff-filter=d --name-only ${GITHUB_BASE_REF} ${GITHUB_HEAD_REF}
+    )"
     readonly kustomization_directories="$(
-      git diff --diff-filter=d --name-only ${GITHUB_BASE_REF} ${GITHUB_HEAD_REF} \
+      echo "${changed_files}" \
         | xargs -I {} dirname {} \
         | sort -u \
         | xargs -I {} sh -c 'find {} -maxdepth 1 \( -name kustomization.yml -o -name kustomization.yaml \) | grep -q . && echo {} || true'
