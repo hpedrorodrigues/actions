@@ -1,6 +1,6 @@
 # envsubst
 
-Simple wrapper action for running envsubst over a file or set of files.
+Simple wrapper action for running [envsubst] over a file or set of files.
 
 ## Usage
 
@@ -17,6 +17,10 @@ Simple wrapper action for running envsubst over a file or set of files.
     # Whether to perform in-place substitutions.
     # If true, the input files will be overwritten with the result.
     in_place: ""
+
+    # Describe environment variables to be used in the substitutions.
+    # If provided, only the environment variables referenced in the format will be substituted.
+    format: ""
 ```
 
 ## Scenarios
@@ -26,6 +30,7 @@ Simple wrapper action for running envsubst over a file or set of files.
 - [Apply substitutions in-place](#apply-substitutions-in-place)
 - [Apply substitutions with custom environment variables](#apply-substitutions-with-custom-environment-variables)
 - [Apply substitutions and print result to stdout](#apply-substitutions-and-print-result-to-stdout)
+- [Apply substitutions restricting to specific environment variables](#apply-substitutions-restricting-to-specific-environment-variables)
 
 ### Apply substitutions on a single file
 
@@ -73,3 +78,16 @@ Simple wrapper action for running envsubst over a file or set of files.
   with:
     input: template.yml
 ```
+
+### Apply substitutions restricting to specific environment variables
+
+```yaml
+- uses: hpedrorodrigues/actions/envsubst@main
+  with:
+    input: template.yml
+    format: '${CUSTOM_VAR} ${GITHUB_SHA}'
+```
+
+
+
+[envsubst]: https://www.gnu.org/software/gettext/manual/html_node/envsubst-Invocation.html
