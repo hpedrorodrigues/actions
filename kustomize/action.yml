@@ -3,14 +3,14 @@ author: Pedro Rodrigues
 description: Simple action to validate kustomization files and outputs.
 inputs:
   detection:
-    description: Which rule to use to detect the kustomization file.
+    description: Strategy to to use to detect kustomization directories.
     required: true
   path:
-    description: Path to kustomization directories.
+    description: Paths to kustomization directories.
     required: false
     default: ''
   log_level:
-    description: Level of logs to output.
+    description: Log level to use.
     required: false
     default: 'quiet'
 branding:
