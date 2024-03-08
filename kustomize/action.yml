@@ -19,5 +19,7 @@ branding:
 runs:
   using: 'composite'
   steps:
+    - run: echo "${{ github.action_path }}" >> "${GITHUB_PATH}"
+      shell: sh
     - run: entrypoint.sh
       shell: sh
