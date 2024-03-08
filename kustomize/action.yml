@@ -19,9 +19,11 @@ branding:
 runs:
   using: 'composite'
   steps:
-    - run: echo "${{ github.action_path }}" >> "${GITHUB_PATH}"
+    - name: Adding action's path to runner's path
+      run: echo "${{ github.action_path }}" >> "${GITHUB_PATH}"
       shell: sh
-    - run: entrypoint.sh
+    - name: Running Kustomize
+      run: entrypoint.sh
       shell: sh
       env:
         INPUT_DETECTION: ${{ inputs.detection }}
