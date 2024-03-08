@@ -5,6 +5,14 @@ inputs:
   detection:
     description: Which rule to use to detect the kustomization file.
     required: true
+  path:
+    description: Path to kustomization directories.
+    required: false
+    default: ''
+  log_level:
+    description: Level of logs to output.
+    required: false
+    default: 'quiet'
 branding:
   icon: 'rotate-cw'
   color: 'blue'

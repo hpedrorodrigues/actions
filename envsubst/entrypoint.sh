@@ -13,7 +13,7 @@ readonly in_place=${INPUT_IN_PLACE:-false}
 readonly format="${INPUT_FORMAT:-}"
 
 if [ -n "${output}" ] && ${in_place}; then
-  echo >&2 'Error: `output` and `in_place` are mutually exclusive and cannot be used together.'
+  >&2 echo 'Error: `output` and `in_place` are mutually exclusive and cannot be used together.'
   exit 1
 fi
 
@@ -30,8 +30,8 @@ for item in ${output}; do
 done
 
 if [ -n "${output}" ] && [ "${input_size}" -ne "${output_size}" ]; then
-  echo >&2 'Error: `input` and `output` must have the same number of items.'
-  echo >&2 "Got: input items=${input_size}, output items=${output_size}."
+  >&2 echo 'Error: `input` and `output` must have the same number of items.'
+  >&2 echo "Got: input items=${input_size}, output items=${output_size}."
   exit 1
 fi
 
