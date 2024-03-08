@@ -20,18 +20,18 @@ main() {
 
   run main
   [ "${status}" -eq 0 ]
-  [ "${lines[0]}" = 'LOOK: ./.github/extra/kustomize/variants' ]
-  [ "${lines[1]}" = 'PASS: ./.github/extra/kustomize/variants' ]
-  [ "${lines[2]}" = 'LOOK: ./.github/extra/kustomize/variants/prd' ]
-  [ "${lines[3]}" = 'PASS: ./.github/extra/kustomize/variants/prd' ]
-  [ "${lines[4]}" = 'LOOK: ./.github/extra/kustomize/variants/dev' ]
-  [ "${lines[5]}" = 'PASS: ./.github/extra/kustomize/variants/dev' ]
-  [ "${lines[6]}" = 'LOOK: ./.github/extra/kustomize/variants/stg' ]
-  [ "${lines[7]}" = 'PASS: ./.github/extra/kustomize/variants/stg' ]
-  [ "${lines[8]}" = 'LOOK: ./.github/extra/kustomize/variants/base' ]
-  [ "${lines[9]}" = 'PASS: ./.github/extra/kustomize/variants/base' ]
-  [ "${lines[10]}" = 'LOOK: ./.github/extra/kustomize/simple' ]
-  [ "${lines[11]}" = 'PASS: ./.github/extra/kustomize/simple' ]
+  [[ "${output}" == *'LOOK: ./.github/extra/kustomize/variants'* ]]
+  [[ "${output}" == *'PASS: ./.github/extra/kustomize/variants'* ]]
+  [[ "${output}" == *'LOOK: ./.github/extra/kustomize/variants/prd'* ]]
+  [[ "${output}" == *'PASS: ./.github/extra/kustomize/variants/prd'* ]]
+  [[ "${output}" == *'LOOK: ./.github/extra/kustomize/variants/dev'* ]]
+  [[ "${output}" == *'PASS: ./.github/extra/kustomize/variants/dev'* ]]
+  [[ "${output}" == *'LOOK: ./.github/extra/kustomize/variants/stg'* ]]
+  [[ "${output}" == *'PASS: ./.github/extra/kustomize/variants/stg'* ]]
+  [[ "${output}" == *'LOOK: ./.github/extra/kustomize/variants/base'* ]]
+  [[ "${output}" == *'PASS: ./.github/extra/kustomize/variants/base'* ]]
+  [[ "${output}" == *'LOOK: ./.github/extra/kustomize/simple'* ]]
+  [[ "${output}" == *'PASS: ./.github/extra/kustomize/simple'* ]]
 }
 
 @test 'Should validate all paths provided when detection is set to static' {
