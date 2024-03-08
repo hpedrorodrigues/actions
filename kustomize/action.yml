@@ -1,0 +1,15 @@
+name: kustomize
+author: Pedro Rodrigues
+description: Simple action to validate kustomization files and outputs.
+inputs:
+  detection:
+    description: Which rule to use to detect the kustomization file.
+    required: true
+branding:
+  icon: 'rotate-cw'
+  color: 'blue'
+runs:
+  using: 'composite'
+  steps:
+    - run: entrypoint.sh
+      shell: sh
