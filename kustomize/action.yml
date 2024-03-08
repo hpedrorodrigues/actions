@@ -23,3 +23,7 @@ runs:
       shell: sh
     - run: entrypoint.sh
       shell: sh
+      env:
+        INPUT_DETECTION: ${{ inputs.detection }}
+        INPUT_PATH: ${{ inputs.path }}
+        INPUT_LOG_LEVEL: ${{ inputs.log_level }}
