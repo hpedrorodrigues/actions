@@ -22,6 +22,11 @@ case "${detection}" in
       find . -type f \( -name kustomization.yml -o -name kustomization.yaml \) \
         | xargs -I {} dirname {}
     )"
+
+    if [ -z "${kustomization_directories}" ]; then
+      echo 'No kustomization directories found.'
+      exit 0
+    fi
     ;;
   git-diff)
     readonly kustomization_directories="$(
@@ -30,6 +35,11 @@ case "${detection}" in
         | sort -u \
         | xargs -I {} sh -c 'find {} -maxdepth 1 \( -name kustomization.yml -o -name kustomization.yaml \) | grep -q . && echo {} || true'
     )"
+
+    if [ -z "${kustomization_directories}" ]; then
+      echo 'No relevant changes found.'
+      exit 0
+    fi
     ;;
   static)
     if [ -z "${path}" ]; then
