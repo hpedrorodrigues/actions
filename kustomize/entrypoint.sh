@@ -1,7 +1,6 @@
 #!/bin/sh
 
 set -o nounset
-set -o pipefail
 
 if ${VERBOSE:-false}; then
   set -o xtrace
