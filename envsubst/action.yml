@@ -13,6 +13,10 @@ inputs:
     description: Whether to apply the substitutions in place.
     required: false
     default: false
+  format:
+    description: Restrict the substitutions to the environment variables referenced in the format string.
+    required: false
+    default: ''
 branding:
   icon: 'rotate-cw'
   color: 'blue'

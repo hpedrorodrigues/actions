@@ -3,13 +3,14 @@
 set -o errexit
 set -o nounset
 
-if ${DEBUG:-false}; then
+if ${VERBOSE:-false}; then
   set -o xtrace
 fi
 
 readonly input="${INPUT_INPUT:-}"
 readonly output="${INPUT_OUTPUT:-}"
 readonly in_place=${INPUT_IN_PLACE:-false}
+readonly format="${INPUT_FORMAT:-}"
 
 if [ -n "${output}" ] && ${in_place}; then
   echo >&2 'Error: `output` and `in_place` are mutually exclusive and cannot be used together.'
@@ -34,19 +35,27 @@ if [ -n "${output}" ] && [ "${input_size}" -ne "${output_size}" ]; then
   exit 1
 fi
 
+envsubst_wrapper() {
+  if [ -n "${format}" ]; then
+    envsubst "${format}"
+  else
+    envsubst
+  fi
+}
+
 for i in $(seq '0' "$((input_size - 1))"); do
   input_item="$(eval echo "\$input_item_${i}")"
 
   if ${in_place}; then
     echo "Processing \"${input_item}\" (in-place)"
     content=$(cat "${input_item}")
-    echo "${content}" | envsubst >"${input_item}"
+    echo "${content}" | envsubst_wrapper >"${input_item}"
   elif [ -z "${output}" ]; then
     echo "Processing \"${input_item}\" (stdout)"
-    envsubst <"${input_item}"
+    envsubst_wrapper <"${input_item}"
   else
     output_item="$(eval echo "\$output_item_${i}")"
     echo "Processing \"${input_item}\" -> \"${output_item}\""
-    envsubst <"${input_item}" >"${output_item}"
+    envsubst_wrapper <"${input_item}" >"${output_item}"
   fi
 done

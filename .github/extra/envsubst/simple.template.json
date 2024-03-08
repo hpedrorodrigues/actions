@@ -1,1 +1,1 @@
-{"key": "value"}
+{"key_1": "${VALUE_1}", "key_2": "${VALUE_2}", "key_3": "${VALUE_3}"}
