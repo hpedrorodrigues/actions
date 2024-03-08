@@ -13,23 +13,23 @@ spec:
         app: app
     spec:
       containers:
-      - name: app
-        image: app:latest
-        command:
-          - /app
-          - --port=8080
-          - --verbose=$(VERBOSE)
-          - --debug=$(DEBUG)
-        ports:
-        - containerPort: 8080
-        env:
-        - name: VERBOSE
-          valueFrom:
-            configMapKeyRef:
-              name: config
-              key: verbose
-        - name: DEBUG
-          valueFrom:
-            configMapKeyRef:
-              name: config
-              key: debug
+        - name: app
+          image: app:latest
+          command:
+            - /app
+            - --port=8080
+            - --verbose=$(VERBOSE)
+            - --debug=$(DEBUG)
+          ports:
+            - containerPort: 8080
+          env:
+            - name: VERBOSE
+              valueFrom:
+                configMapKeyRef:
+                  name: config
+                  key: verbose
+            - name: DEBUG
+              valueFrom:
+                configMapKeyRef:
+                  name: config
+                  key: debug

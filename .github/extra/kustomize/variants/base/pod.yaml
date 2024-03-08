@@ -6,5 +6,5 @@ metadata:
     app: app
 spec:
   containers:
-  - name: app
-    image: app:latest
+    - name: app
+      image: app:latest

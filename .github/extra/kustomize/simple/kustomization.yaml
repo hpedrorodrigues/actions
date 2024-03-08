@@ -3,10 +3,10 @@ kind: Kustomization
 metadata:
   name: app
 labels:
-- includeSelectors: true
-  pairs:
-    app: app
+  - includeSelectors: true
+    pairs:
+      app: app
 resources:
-- configmap.yaml
-- deployment.yaml
-- service.yaml
+  - configmap.yaml
+  - deployment.yaml
+  - service.yaml

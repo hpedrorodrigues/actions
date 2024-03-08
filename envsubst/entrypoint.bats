@@ -137,7 +137,7 @@ main() {
   run main
   [ "${status}" -eq 0 ]
   [ "${lines[0]}" = "Processing \"${JSON_INPUT_FILE}\" (stdout)" ]
-  [ "${lines[1]}" = '{"key_1": "value 1", "key_2": "${VALUE_2}", "key_3": "value 3"}' ]
+  [ "${lines[1]}" = '{ "key_1": "value 1", "key_2": "${VALUE_2}", "key_3": "value 3" }' ]
 }
 
 @test "Should fail when \`input\` and \`output\` doesn't have the same number of items" {
