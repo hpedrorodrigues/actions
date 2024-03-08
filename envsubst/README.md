@@ -18,7 +18,7 @@ Simple wrapper action for running [envsubst] over a file or set of files.
     # If true, the input files will be overwritten with the result.
     in_place: ""
 
-    # Describe environment variables to be used in the substitutions.
+    # Describe environment variables to be used in the substitutions (separated by space).
     # If provided, only the environment variables referenced in the format will be substituted.
     format: ""
 ```
