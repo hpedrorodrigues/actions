@@ -15,6 +15,7 @@ main() {
 
 @test 'Should validate all kustomization files when detection is set to all' {
   export INPUT_DETECTION='all'
+  export INPUT_PATH=''
   export INPUT_LOG_LEVEL='quiet'
 
   run main
@@ -48,6 +49,8 @@ main() {
 
 @test 'Should fail when an invalid value is given for detection' {
   export INPUT_DETECTION="invalid-${RANDOM}"
+  export INPUT_PATH=''
+  export INPUT_LOG_LEVEL='quiet'
 
   run main
   [ "${status}" -eq 1 ]
@@ -55,6 +58,8 @@ main() {
 }
 
 @test 'Should fail when an invalid value is given for log level' {
+  export INPUT_DETECTION='all'
+  export INPUT_PATH=''
   export INPUT_LOG_LEVEL="invalid-${RANDOM}"
 
   run main
