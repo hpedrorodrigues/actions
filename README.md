@@ -1,11 +1,12 @@
 # Reusable actions
 
 - [envsubst](./envsubst)
+- [kustomize](./kustomize)
 
-### Reference
+## Release
 
-- [Creating actions][creating-actions-docs]
+Manually run this [workflow][release-action] with the desired version
 
 
 
-[creating-actions-docs]: https://docs.github.com/en/actions/creating-actions
+[release-action]: https://github.com/hpedrorodrigues/actions/actions/workflows/release.yml

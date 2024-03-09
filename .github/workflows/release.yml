@@ -1,0 +1,25 @@
+name: Release
+on:
+  workflow_dispatch:
+    inputs:
+      version:
+        description: 'Version to be used to create the release and tag (e.g., v1.0.0).'
+        required: true
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - name: Clone repository
+        uses: actions/checkout@v4
+      - name: Create Release
+        uses: ncipollo/release-action@v1
+        with:
+          prerelease: false
+          draft: false
+          makeLatest: true
+          commit: ${{ github.sha }}
+          tag: ${{ inputs.version }}
+          name: ${{ inputs.version }}
+          token: ${{ github.token }}
