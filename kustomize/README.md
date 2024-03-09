@@ -34,6 +34,8 @@ Simple action to validate kustomization files and outputs using [Kustomize].
 - [Validate modified kustomization directories](#validate-modified-kustomization-directories)
 - [Validate specific kustomization directories](#validate-specific-kustomization-directories)
 - [Validate kustomization directories with custom log level](#validate-kustomization-directories-with-custom-log-level)
+- [Validate kustomization directories with custom flags](#validate-kustomization-directories-with-custom-flags)
+- [Validate kustomization directories with custom kustomize version](#validate-kustomization-directories-with-custom-kustomize-version)
 
 ### Validate all kustomization directories
 
@@ -72,6 +74,27 @@ Simple action to validate kustomization files and outputs using [Kustomize].
   with:
     filter: 'none'
     log_level: 'verbose'
+```
+
+### Validate kustomization directories with custom flags
+
+```yaml
+- uses: hpedrorodrigues/actions/kustomize@main
+  with:
+    filter: 'none'
+    flags: '--load-restrictor=LoadRestrictionsNone --enable-alpha-plugins'
+```
+
+### Validate kustomization directories with custom kustomize version
+
+```yaml
+- uses: alexellis/setup-arkade@v2
+- uses: alexellis/arkade-get@master
+  with:
+    kustomize: latest
+- uses: hpedrorodrigues/actions/kustomize@main
+  with:
+    filter: 'none'
 ```
 
 
