@@ -2,9 +2,10 @@ name: kustomize
 author: Pedro Rodrigues
 description: Simple action to validate kustomization files and outputs.
 inputs:
-  detection:
-    description: Strategy to to use to detect kustomization directories.
-    required: true
+  filter:
+    description: Strategy to use for filtering kustomization directories.
+    required: false
+    default: 'none'
   path:
     description: Paths to kustomization directories.
     required: false
@@ -13,6 +14,10 @@ inputs:
     description: Log level to use.
     required: false
     default: 'quiet'
+  flags:
+    description: Extra flags to pass to kustomize.
+    required: false
+    default: ''
 branding:
   icon: 'rotate-cw'
   color: 'blue'
@@ -24,6 +29,7 @@ runs:
     - run: entrypoint.sh
       shell: sh
       env:
-        INPUT_DETECTION: ${{ inputs.detection }}
+        INPUT_FILTER: ${{ inputs.filter }}
         INPUT_PATH: ${{ inputs.path }}
         INPUT_LOG_LEVEL: ${{ inputs.log_level }}
+        INPUT_FLAGS: ${{ inputs.flags }}

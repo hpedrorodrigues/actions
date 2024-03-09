@@ -6,9 +6,10 @@ if ${VERBOSE:-false}; then
   set -o xtrace
 fi
 
-readonly detection="${INPUT_DETECTION:-}"
+readonly filter="${INPUT_FILTER:-}"
 readonly path="${INPUT_PATH:-}"
 readonly log_level="${INPUT_LOG_LEVEL:-}"
+readonly flags="${INPUT_FLAGS:-}"
 
 if [ "${log_level}" != 'quiet' ] && [ "${log_level}" != 'verbose' ]; then
   >&2 echo "Error: invalid value provided for log level: \"${log_level}\"."
@@ -16,8 +17,8 @@ if [ "${log_level}" != 'quiet' ] && [ "${log_level}" != 'verbose' ]; then
   exit 1
 fi
 
-case "${detection}" in
-  all)
+case "${filter}" in
+  none)
     readonly kustomization_directories="$(
       find . -type f \( -name kustomization.yml -o -name kustomization.yaml \) \
         | xargs -I {} dirname {}
@@ -28,7 +29,7 @@ case "${detection}" in
       exit 0
     fi
     ;;
-  git-diff)
+  modified)
     readonly kustomization_directories="$(
       git diff --name-only HEAD^ \
         | xargs -I {} dirname {} \
@@ -43,14 +44,14 @@ case "${detection}" in
     ;;
   static)
     if [ -z "${path}" ]; then
-      >&2 echo 'Error: `static` detection requires a value for input `path`.'
+      >&2 echo 'Error: `static` filter requires a value for input `path`.'
       exit 1
     fi
 
     readonly kustomization_directories="${path}"
     ;;
   *)
-    >&2 echo "Error: invalid value provided for detection: \"${detection}\"."
+    >&2 echo "Error: invalid value provided for filter: \"${filter}\"."
     exit 1
     ;;
 esac
@@ -65,7 +66,7 @@ kustomize_wrapper() {
 
 for kustomization_directory in ${kustomization_directories}; do
   echo "LOOK: ${kustomization_directory}"
-  output="$(kustomize_wrapper build "${kustomization_directory}")"
+  output="$(kustomize_wrapper build ${flags} "${kustomization_directory}")"
 
   if [ "${?}" -eq 0 ]; then
     echo "PASS: ${kustomization_directory}"
