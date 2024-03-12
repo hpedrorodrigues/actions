@@ -31,7 +31,7 @@ case "${filter}" in
     ;;
   modified)
     readonly kustomization_directories="$(
-      git diff --name-only HEAD^ \
+      git diff --diff-filter=d --name-only HEAD^ \
         | xargs -I {} dirname {} \
         | sort -u \
         | xargs -I {} sh -c 'find {} -maxdepth 1 \( -name kustomization.yml -o -name kustomization.yaml \) | grep -q . && echo {} || true'
