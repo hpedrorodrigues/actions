@@ -1,0 +1,52 @@
+name: Build and publish an image with apko
+author: Pedro Rodrigues
+description: Simple action to build and publish an OCI image with apko.
+inputs:
+  config:
+    description: The config file to use for building the image.
+    required: true
+  tag:
+    description: The tag(s) to use for publishing the image.
+    required: true
+  annotation:
+    description: The annotation(s) to use for the image. Format is key1:value1,key2:value2.
+    default: ''
+  source_date_epoch:
+    description: The source date epoch to use for the image.
+    default: ''
+  repository:
+    description: The repository to use for publishing the image.
+    default: ${{ github.repository }}
+  registry:
+    description: The registry to use for publishing the image.
+    default: 'ghcr.io'
+  registry_username:
+    description: The username to use for pushing to a custom registry.
+    default: ${{ github.repository_owner }}
+  registry_password:
+    description: The password to use for pushing to a custom registry.
+    default: ${{ github.token }}
+branding:
+  icon: 'rotate-cw'
+  color: 'blue'
+runs:
+  using: 'composite'
+  steps:
+    - uses: sigstore/cosign-installer@v3
+    - uses: imjasonh/setup-crane@v0.3
+
+    - run: echo "${{ github.action_path }}" >> "${GITHUB_PATH}"
+      shell: sh
+
+    - id: publish
+      run: entrypoint.sh
+      shell: sh
+      env:
+        INPUT_CONFIG: ${{ inputs.config }}
+        INPUT_TAG: ${{ inputs.tag }}
+        INPUT_ANNOTATION: ${{ inputs.annotation }}
+        INPUT_SOURCE_DATE_EPOCH: ${{ inputs.source_date_epoch }}
+        INPUT_REPOSITORY: ${{ inputs.repository }}
+        INPUT_REGISTRY: ${{ inputs.registry }}
+        INPUT_REGISTRY_USERNAME: ${{ inputs.registry_username }}
+        INPUT_REGISTRY_PASSWORD: ${{ inputs.registry_password }}
