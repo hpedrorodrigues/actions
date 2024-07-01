@@ -19,7 +19,7 @@ inputs:
     required: false
     default: ''
 branding:
-  icon: 'rotate-cw'
+  icon: 'wind'
   color: 'blue'
 runs:
   using: 'composite'

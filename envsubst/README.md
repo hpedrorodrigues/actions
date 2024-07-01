@@ -8,19 +8,19 @@ Simple wrapper action for running [envsubst] over a file or set of files.
 - uses: hpedrorodrigues/actions/envsubst@v1.0.1
   with:
     # One or more files to apply substitutions on (separated by space).
-    input: ""
+    input: ''
 
     # One or more files to write the result to (separated by space).
     # If not provided, the result will be printed to stdout.
-    output: ""
+    output: ''
 
     # Whether to perform in-place substitutions.
     # If true, the input files will be overwritten with the result.
-    in_place: ""
+    in_place: ''
 
     # Describe environment variables to be used in the substitutions (separated by space).
     # If provided, only the environment variables referenced in the format will be substituted.
-    format: ""
+    format: ''
 ```
 
 ## Scenarios
@@ -68,7 +68,7 @@ Simple wrapper action for running [envsubst] over a file or set of files.
     output: result.yml
   env:
     BUILD_REF: ${{ github.sha }}
-    CUSTOM: "static value"
+    CUSTOM: 'static value'
 ```
 
 ### Apply substitutions and print result to stdout
@@ -87,7 +87,5 @@ Simple wrapper action for running [envsubst] over a file or set of files.
     input: template.yml
     format: '${CUSTOM_VAR} ${GITHUB_SHA}'
 ```
-
-
 
 [envsubst]: https://www.gnu.org/software/gettext/manual/html_node/envsubst-Invocation.html
