@@ -1,6 +1,6 @@
 # Kustomize
 
-Simple action to validate kustomization files and outputs using [Kustomize].
+An action to validate kustomization files and outputs using [Kustomize].
 
 ## Usage
 

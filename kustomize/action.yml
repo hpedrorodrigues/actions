@@ -1,6 +1,6 @@
 name: kustomize
 author: Pedro Rodrigues
-description: Simple action to validate kustomization files and outputs.
+description: Validate kustomization files and outputs.
 inputs:
   filter:
     description: Strategy to use for filtering kustomization directories.

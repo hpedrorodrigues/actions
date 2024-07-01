@@ -1,6 +1,6 @@
 name: envsubst
 author: Pedro Rodrigues
-description: Simple wrapper action for envsubst.
+description: Substitutes the values of environment variables using envsubst (gettext).
 inputs:
   input:
     description: One or more input files to apply substitutions to (separated by space).
