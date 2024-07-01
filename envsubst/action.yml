@@ -18,8 +18,8 @@ inputs:
     required: false
     default: ''
 branding:
-  icon: 'rotate-cw'
-  color: 'blue'
+  icon: 'file-text'
+  color: 'gray-dark'
 runs:
   using: 'docker'
   image: 'Dockerfile'
