@@ -2,10 +2,10 @@ name: Setup Sphynx
 author: Pedro Rodrigues
 description: Set up Sphynx CLI.
 branding:
-  icon: 'award'
-  color: 'gray-dark'
+  icon: award
+  color: gray-dark
 runs:
-  using: 'composite'
+  using: composite
   steps:
     - name: Set up Homebrew
       uses: Homebrew/actions/setup-homebrew@master

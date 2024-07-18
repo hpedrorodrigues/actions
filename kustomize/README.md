@@ -9,13 +9,13 @@ An action to validate kustomization files and outputs using [Kustomize].
   with:
     # Strategy to use for detecting kustomization directories.
     # Possible values
-    # - none: use all kustomization directories found in the repository.
-    # - modified: use kustomization directories found based on the modified files.
+    # - all: use all kustomization directories found in the repository.
+    # - modified: use kustomization directories found based on the modified files (git).
     # - static: use the provided paths to kustomization directories.
-    filter: ''
+    auto_discovery: ''
 
     # Paths to kustomization directories to validate (separated by space).
-    # This is only used when filter is set to "static".
+    # This is only used when `auto_discovery` is set to "static".
     path: ''
 
     # Log level to use for the validation.
@@ -44,7 +44,7 @@ An action to validate kustomization files and outputs using [Kustomize].
 # or
 - uses: hpedrorodrigues/actions/kustomize@v1.0.2
   with:
-    filter: 'none'
+    auto_discovery: 'all'
 ```
 
 ### Validate modified kustomization directories
@@ -55,7 +55,7 @@ An action to validate kustomization files and outputs using [Kustomize].
     fetch-depth: 0 # This is required to allow this action to detect modified files.
 - uses: hpedrorodrigues/actions/kustomize@v1.0.2
   with:
-    filter: 'modified'
+    auto_discovery: 'modified'
 ```
 
 ### Validate specific kustomization directories
@@ -63,7 +63,7 @@ An action to validate kustomization files and outputs using [Kustomize].
 ```yaml
 - uses: hpedrorodrigues/actions/kustomize@v1.0.2
   with:
-    filter: 'static'
+    auto_discovery: 'static'
     path: 'kustomize/base kustomize/overlays/production'
 ```
 
@@ -72,7 +72,7 @@ An action to validate kustomization files and outputs using [Kustomize].
 ```yaml
 - uses: hpedrorodrigues/actions/kustomize@v1.0.2
   with:
-    filter: 'none'
+    auto_discovery: 'all'
     log_level: 'verbose'
 ```
 
@@ -81,7 +81,7 @@ An action to validate kustomization files and outputs using [Kustomize].
 ```yaml
 - uses: hpedrorodrigues/actions/kustomize@v1.0.2
   with:
-    filter: 'none'
+    auto_discovery: 'all'
     flags: '--load-restrictor=LoadRestrictionsNone --enable-alpha-plugins'
 ```
 
@@ -94,7 +94,7 @@ An action to validate kustomization files and outputs using [Kustomize].
     kustomize: latest
 - uses: hpedrorodrigues/actions/kustomize@v1.0.2
   with:
-    filter: 'none'
+    auto_discovery: 'all'
 ```
 
 [Kustomize]: https://kustomize.io
