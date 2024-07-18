@@ -5,11 +5,11 @@ An action to validate kustomization files and outputs using [Kustomize].
 ## Usage
 
 ```yaml
-- uses: hpedrorodrigues/actions/kustomize@v1.0.2
+- uses: hpedrorodrigues/actions/kustomize@v1.0.3
   with:
     # Strategy to use for detecting kustomization directories.
     # Possible values
-    # - all: use all kustomization directories found in the repository.
+    # - all: use all kustomization directories found in the repository. [default]
     # - modified: use kustomization directories found based on the modified files (git).
     # - static: use the provided paths to kustomization directories.
     auto_discovery: ''
@@ -40,11 +40,11 @@ An action to validate kustomization files and outputs using [Kustomize].
 ### Validate all kustomization directories
 
 ```yaml
-- uses: hpedrorodrigues/actions/kustomize@v1.0.2
+- uses: hpedrorodrigues/actions/kustomize@v1.0.3
 # or
-- uses: hpedrorodrigues/actions/kustomize@v1.0.2
+- uses: hpedrorodrigues/actions/kustomize@v1.0.3
   with:
-    auto_discovery: 'all'
+    auto_discovery: all
 ```
 
 ### Validate modified kustomization directories
@@ -53,36 +53,36 @@ An action to validate kustomization files and outputs using [Kustomize].
 - uses: actions/checkout@v4
   with:
     fetch-depth: 0 # This is required to allow this action to detect modified files.
-- uses: hpedrorodrigues/actions/kustomize@v1.0.2
+- uses: hpedrorodrigues/actions/kustomize@v1.0.3
   with:
-    auto_discovery: 'modified'
+    auto_discovery: modified
 ```
 
 ### Validate specific kustomization directories
 
 ```yaml
-- uses: hpedrorodrigues/actions/kustomize@v1.0.2
+- uses: hpedrorodrigues/actions/kustomize@v1.0.3
   with:
-    auto_discovery: 'static'
-    path: 'kustomize/base kustomize/overlays/production'
+    auto_discovery: static
+    path: kustomize/base kustomize/overlays/production
 ```
 
 ### Validate kustomization directories with custom log level
 
 ```yaml
-- uses: hpedrorodrigues/actions/kustomize@v1.0.2
+- uses: hpedrorodrigues/actions/kustomize@v1.0.3
   with:
-    auto_discovery: 'all'
-    log_level: 'verbose'
+    auto_discovery: all
+    log_level: verbose
 ```
 
 ### Validate kustomization directories with custom flags
 
 ```yaml
-- uses: hpedrorodrigues/actions/kustomize@v1.0.2
+- uses: hpedrorodrigues/actions/kustomize@v1.0.3
   with:
-    auto_discovery: 'all'
-    flags: '--load-restrictor=LoadRestrictionsNone --enable-alpha-plugins'
+    auto_discovery: all
+    flags: --load-restrictor=LoadRestrictionsNone --enable-alpha-plugins
 ```
 
 ### Validate kustomization directories with custom kustomize version
@@ -92,9 +92,9 @@ An action to validate kustomization files and outputs using [Kustomize].
 - uses: alexellis/arkade-get@master
   with:
     kustomize: latest
-- uses: hpedrorodrigues/actions/kustomize@v1.0.2
+- uses: hpedrorodrigues/actions/kustomize@v1.0.3
   with:
-    auto_discovery: 'all'
+    auto_discovery: all
 ```
 
 [Kustomize]: https://kustomize.io
