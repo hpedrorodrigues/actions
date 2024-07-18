@@ -2,10 +2,10 @@ name: kustomize
 author: Pedro Rodrigues
 description: Validate kustomization files and outputs.
 inputs:
-  filter:
+  auto_discovery:
     description: Strategy to use for filtering kustomization directories.
     required: false
-    default: 'none'
+    default: all
   path:
     description: Paths to kustomization directories.
     required: false
@@ -13,23 +13,23 @@ inputs:
   log_level:
     description: Log level to use.
     required: false
-    default: 'quiet'
+    default: quiet
   flags:
     description: Extra flags to pass to kustomize.
     required: false
     default: ''
 branding:
-  icon: 'wind'
-  color: 'blue'
+  icon: wind
+  color: blue
 runs:
-  using: 'composite'
+  using: composite
   steps:
     - run: echo "${{ github.action_path }}" >> "${GITHUB_PATH}"
       shell: sh
     - run: entrypoint.sh
       shell: sh
       env:
-        INPUT_FILTER: ${{ inputs.filter }}
+        INPUT_AUTO_DISCOVERY: ${{ inputs.auto_discovery }}
         INPUT_PATH: ${{ inputs.path }}
         INPUT_LOG_LEVEL: ${{ inputs.log_level }}
         INPUT_FLAGS: ${{ inputs.flags }}

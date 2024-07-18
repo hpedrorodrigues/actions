@@ -6,7 +6,7 @@ if ${VERBOSE:-false}; then
   set -o xtrace
 fi
 
-readonly filter="${INPUT_FILTER:-}"
+readonly auto_discovery="${INPUT_AUTO_DISCOVERY:-}"
 readonly path="${INPUT_PATH:-}"
 readonly log_level="${INPUT_LOG_LEVEL:-}"
 readonly flags="${INPUT_FLAGS:-}"
@@ -17,8 +17,8 @@ if [ "${log_level}" != 'quiet' ] && [ "${log_level}" != 'verbose' ]; then
   exit 1
 fi
 
-case "${filter}" in
-  none)
+case "${auto_discovery}" in
+  all)
     readonly kustomization_directories="$(
       find . -type f \( -name kustomization.yml -o -name kustomization.yaml \) \
         | xargs -I {} dirname {}
@@ -44,14 +44,14 @@ case "${filter}" in
     ;;
   static)
     if [ -z "${path}" ]; then
-      >&2 echo 'Error: `static` filter requires a value for input `path`.'
+      >&2 echo 'Error: `static` mode requires a value for input `path`.'
       exit 1
     fi
 
     readonly kustomization_directories="${path}"
     ;;
   *)
-    >&2 echo "Error: invalid value provided for filter: \"${filter}\"."
+    >&2 echo "Error: invalid value provided for auto_discovery: \"${auto_discovery}\"."
     exit 1
     ;;
 esac
