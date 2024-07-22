@@ -7,6 +7,6 @@ if ${VERBOSE:-false}; then
   set -o xtrace
 fi
 
-terraform fmt -check -diff -recursive \
-  && tofu fmt -check -diff -recursive \
-  && terragrunt hclfmt --terragrunt-check --terragrunt-diff
+terraform fmt -check -recursive \
+  && tofu fmt -check -recursive \
+  && terragrunt hclfmt --terragrunt-check
