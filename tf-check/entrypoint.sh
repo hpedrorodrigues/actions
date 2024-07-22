@@ -7,6 +7,11 @@ if ${VERBOSE:-false}; then
   set -o xtrace
 fi
 
-terraform fmt -check -recursive \
-  && tofu fmt -check -recursive \
-  && terragrunt hclfmt --terragrunt-check
+echo 'Checking Terraform files...'
+terraform fmt -check -recursive
+
+echo 'Checking OpenTofu files...'
+tofu fmt -check -recursive
+
+echo 'Checking Terragrunt files...'
+terragrunt hclfmt --terragrunt-check
