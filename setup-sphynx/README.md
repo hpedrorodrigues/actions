@@ -6,7 +6,7 @@ An action that sets up [Sphynx CLI].
 
 ```yaml
 - name: Set up Sphynx
-  uses: hpedrorodrigues/actions/setup-sphynx@v1.0.3
+  uses: hpedrorodrigues/actions/setup-sphynx@v1.0.4
 ```
 
 [Sphynx CLI]: https://github.com/hpedrorodrigues/sphynx

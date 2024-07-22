@@ -5,7 +5,7 @@ An action to validate kustomization files and outputs using [Kustomize].
 ## Usage
 
 ```yaml
-- uses: hpedrorodrigues/actions/kustomize@v1.0.3
+- uses: hpedrorodrigues/actions/kustomize@v1.0.4
   with:
     # Strategy to use for detecting kustomization directories.
     # Possible values
@@ -40,9 +40,9 @@ An action to validate kustomization files and outputs using [Kustomize].
 ### Validate all kustomization directories
 
 ```yaml
-- uses: hpedrorodrigues/actions/kustomize@v1.0.3
+- uses: hpedrorodrigues/actions/kustomize@v1.0.4
 # or
-- uses: hpedrorodrigues/actions/kustomize@v1.0.3
+- uses: hpedrorodrigues/actions/kustomize@v1.0.4
   with:
     auto_discovery: all
 ```
@@ -53,7 +53,7 @@ An action to validate kustomization files and outputs using [Kustomize].
 - uses: actions/checkout@v4
   with:
     fetch-depth: 0 # This is required to allow this action to detect modified files.
-- uses: hpedrorodrigues/actions/kustomize@v1.0.3
+- uses: hpedrorodrigues/actions/kustomize@v1.0.4
   with:
     auto_discovery: modified
 ```
@@ -61,7 +61,7 @@ An action to validate kustomization files and outputs using [Kustomize].
 ### Validate specific kustomization directories
 
 ```yaml
-- uses: hpedrorodrigues/actions/kustomize@v1.0.3
+- uses: hpedrorodrigues/actions/kustomize@v1.0.4
   with:
     auto_discovery: static
     path: kustomize/base kustomize/overlays/production
@@ -70,7 +70,7 @@ An action to validate kustomization files and outputs using [Kustomize].
 ### Validate kustomization directories with custom log level
 
 ```yaml
-- uses: hpedrorodrigues/actions/kustomize@v1.0.3
+- uses: hpedrorodrigues/actions/kustomize@v1.0.4
   with:
     auto_discovery: all
     log_level: verbose
@@ -79,7 +79,7 @@ An action to validate kustomization files and outputs using [Kustomize].
 ### Validate kustomization directories with custom flags
 
 ```yaml
-- uses: hpedrorodrigues/actions/kustomize@v1.0.3
+- uses: hpedrorodrigues/actions/kustomize@v1.0.4
   with:
     auto_discovery: all
     flags: --load-restrictor=LoadRestrictionsNone --enable-alpha-plugins
@@ -92,7 +92,7 @@ An action to validate kustomization files and outputs using [Kustomize].
 - uses: alexellis/arkade-get@master
   with:
     kustomize: latest
-- uses: hpedrorodrigues/actions/kustomize@v1.0.3
+- uses: hpedrorodrigues/actions/kustomize@v1.0.4
   with:
     auto_discovery: all
 ```
