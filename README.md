@@ -3,6 +3,7 @@
 - [envsubst](./envsubst)
 - [kustomize](./kustomize)
 - [setup-sphynx](./setup-sphynx)
+- [tf-check](./tf-check)
 
 ## Release
 

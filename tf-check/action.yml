@@ -1,0 +1,9 @@
+name: tf-check
+author: Pedro Rodrigues
+description: Checks files recursively against a canonical format.
+branding:
+  icon: activity
+  color: gray-dark
+runs:
+  using: docker
+  image: Dockerfile
