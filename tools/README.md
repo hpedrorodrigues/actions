@@ -10,7 +10,7 @@ List of pre-installed tools is [here](https://github.com/hpedrorodrigues/images/
 - name: Compress an example file
   uses: hpedrorodrigues/actions/tools@v1.0.5
   with:
-    script: |
+    run: |
       FILE_NAME='example-file'
       zip -r ${FILE_NAME}.zip .
 ```
