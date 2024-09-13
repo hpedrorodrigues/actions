@@ -17,6 +17,10 @@ inputs:
     description: Restrict the substitutions to the environment variables referenced in the format string (separated by space).
     required: false
     default: ''
+  debug:
+    description: Show debugging output
+    required: false
+    default: ${{ runner.debug == '1' }}
 branding:
   icon: file-text
   color: gray-dark

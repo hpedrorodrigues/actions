@@ -14,7 +14,7 @@ main() {
 
 @test 'Allow to run single line scripts' {
   # GitHub-provided environment variables
-  export INPUT_SCRIPT="${SINGLE_LINE_SCRIPT}"
+  export INPUT_RUN="${SINGLE_LINE_SCRIPT}"
 
   run main
   [ "${status}" -eq 0 ]
@@ -23,7 +23,7 @@ main() {
 
 @test 'Allow to run multiline scripts' {
   # GitHub-provided environment variables
-  export INPUT_SCRIPT="${MULTILINE_SCRIPT}"
+  export INPUT_RUN="${MULTILINE_SCRIPT}"
 
   run main
   [ "${status}" -eq 0 ]

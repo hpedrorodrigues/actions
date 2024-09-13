@@ -2,7 +2,7 @@
 
 set -o nounset
 
-if ${VERBOSE:-false}; then
+if ${INPUT_DEBUG:-false}; then
   set -o xtrace
 fi
 

@@ -2,9 +2,13 @@ name: tools
 author: Pedro Rodrigues
 description: Let you run a few pre-installed Linux tools without the necessity to install them on the runner.
 inputs:
-  script:
+  run:
     description: Shell script to run inside the container.
     required: true
+  debug:
+    description: Show debugging output
+    required: false
+    default: ${{ runner.debug == '1' }}
 branding:
   icon: activity
   color: gray-dark

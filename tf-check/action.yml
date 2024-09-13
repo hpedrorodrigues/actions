@@ -1,6 +1,11 @@
 name: tf-check
 author: Pedro Rodrigues
 description: Checks files recursively against a canonical format.
+inputs:
+  debug:
+    description: Show debugging output
+    required: false
+    default: ${{ runner.debug == '1' }}
 branding:
   icon: activity
   color: gray-dark
