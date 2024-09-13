@@ -18,7 +18,7 @@ inputs:
     required: false
     default: ''
   debug:
-    description: Show debugging output
+    description: Show debugging output.
     required: false
     default: ${{ runner.debug == '1' }}
 branding:

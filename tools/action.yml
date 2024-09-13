@@ -6,7 +6,7 @@ inputs:
     description: Shell script to run inside the container.
     required: true
   debug:
-    description: Show debugging output
+    description: Show debugging output.
     required: false
     default: ${{ runner.debug == '1' }}
 branding:
