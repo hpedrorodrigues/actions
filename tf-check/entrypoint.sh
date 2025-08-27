@@ -19,4 +19,4 @@ echo 'Checking OpenTofu files...'
 tofu fmt -check -recursive
 
 echo 'Checking Terragrunt files...'
-terragrunt hcl fmt --check --all
+terragrunt hcl fmt --check

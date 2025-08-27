@@ -8,7 +8,7 @@ List of pre-installed tools is [here](https://github.com/hpedrorodrigues/images/
 
 ```yaml
 - name: Compress an example file
-  uses: hpedrorodrigues/actions/tools@v1.0.6
+  uses: hpedrorodrigues/actions/tools@v1.0.7
   with:
     run: |
       FILE_NAME='example-file'

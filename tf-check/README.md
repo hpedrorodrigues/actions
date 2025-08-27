@@ -6,7 +6,7 @@ Checks files recursively against a canonical format using [Terraform][terraform]
 
 ```yaml
 - name: Lint
-  uses: hpedrorodrigues/actions/tf-check@v1.0.6
+  uses: hpedrorodrigues/actions/tf-check@v1.0.7
 ```
 
 [terraform]: https://www.terraform.io

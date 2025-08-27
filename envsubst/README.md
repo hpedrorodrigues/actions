@@ -5,7 +5,7 @@ Simple wrapper action for running [envsubst] over a file or set of files.
 ## Usage
 
 ```yaml
-- uses: hpedrorodrigues/actions/envsubst@v1.0.6
+- uses: hpedrorodrigues/actions/envsubst@v1.0.7
   with:
     # One or more files to apply substitutions on (separated by space).
     input: ''
@@ -35,7 +35,7 @@ Simple wrapper action for running [envsubst] over a file or set of files.
 ### Apply substitutions on a single file
 
 ```yaml
-- uses: hpedrorodrigues/actions/envsubst@v1.0.6
+- uses: hpedrorodrigues/actions/envsubst@v1.0.7
   with:
     input: template.yml
     output: deployment.yml
@@ -44,7 +44,7 @@ Simple wrapper action for running [envsubst] over a file or set of files.
 ### Apply substitutions on multiple files
 
 ```yaml
-- uses: hpedrorodrigues/actions/envsubst@v1.0.6
+- uses: hpedrorodrigues/actions/envsubst@v1.0.7
   with:
     input: template.yml package.txt config.toml
     output: result.yml output.txt result.toml
@@ -53,7 +53,7 @@ Simple wrapper action for running [envsubst] over a file or set of files.
 ### Apply substitutions in-place
 
 ```yaml
-- uses: hpedrorodrigues/actions/envsubst@v1.0.6
+- uses: hpedrorodrigues/actions/envsubst@v1.0.7
   with:
     input: deployment.yml
     in_place: true
@@ -62,7 +62,7 @@ Simple wrapper action for running [envsubst] over a file or set of files.
 ### Apply substitutions with custom environment variables
 
 ```yaml
-- uses: hpedrorodrigues/actions/envsubst@v1.0.6
+- uses: hpedrorodrigues/actions/envsubst@v1.0.7
   with:
     input: template.yml
     output: result.yml
@@ -74,7 +74,7 @@ Simple wrapper action for running [envsubst] over a file or set of files.
 ### Apply substitutions and print result to stdout
 
 ```yaml
-- uses: hpedrorodrigues/actions/envsubst@v1.0.6
+- uses: hpedrorodrigues/actions/envsubst@v1.0.7
   with:
     input: template.yml
 ```
@@ -82,7 +82,7 @@ Simple wrapper action for running [envsubst] over a file or set of files.
 ### Apply substitutions restricting to specific environment variables
 
 ```yaml
-- uses: hpedrorodrigues/actions/envsubst@v1.0.6
+- uses: hpedrorodrigues/actions/envsubst@v1.0.7
   with:
     input: template.yml
     format: '${CUSTOM_VAR} ${GITHUB_SHA}'
