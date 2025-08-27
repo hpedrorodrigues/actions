@@ -5,6 +5,11 @@ set -o nounset
 
 if ${INPUT_DEBUG:-false}; then
   set -o xtrace
+
+  echo 'Versions:'
+  terraform --version
+  tofu --version
+  terragrunt --version
 fi
 
 echo 'Checking Terraform files...'
@@ -14,4 +19,4 @@ echo 'Checking OpenTofu files...'
 tofu fmt -check -recursive
 
 echo 'Checking Terragrunt files...'
-terragrunt hclfmt --terragrunt-check
+terragrunt hcl fmt --check --all
