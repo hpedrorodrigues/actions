@@ -1,0 +1,44 @@
+{
+  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+  "extends": ["config:recommended", "helpers:pinGitHubActionDigests"],
+  "labels": ["dependencies"],
+  "ignorePaths": [
+    "**/node_modules/**",
+    "**/bower_components/**",
+    "**/vendor/**",
+    "**/examples/**",
+    "**/__tests__/**",
+    "**/test/**",
+    "**/tests/**",
+    "**/__fixtures__/**",
+    ".github/extra/**"
+  ],
+  "packageRules": [
+    {
+      "description": "Automerge low-risk updates once CI passes",
+      "matchUpdateTypes": ["minor", "patch", "pin", "digest"],
+      "automerge": true
+    }
+  ],
+  "customManagers": [
+    {
+      "customType": "regex",
+      "description": "Bump the bats-version input in the Checks workflow",
+      "managerFilePatterns": ["/^\\.github/workflows/checks\\.ya?ml$/"],
+      "matchStrings": ["bats-version:\\s*[\"']?(?<currentValue>[0-9.]+)"],
+      "depNameTemplate": "bats-core/bats-core",
+      "datasourceTemplate": "github-tags",
+      "extractVersionTemplate": "^v(?<version>.+)$"
+    },
+    {
+      "customType": "regex",
+      "description": "Bump hpedrorodrigues/actions @v1.0.x pins in README examples",
+      "managerFilePatterns": ["/(^|/)README\\.md$/"],
+      "matchStrings": [
+        "hpedrorodrigues/actions/[\\w-]+@(?<currentValue>v[0-9.]+)"
+      ],
+      "depNameTemplate": "hpedrorodrigues/actions",
+      "datasourceTemplate": "github-releases"
+    }
+  ]
+}
