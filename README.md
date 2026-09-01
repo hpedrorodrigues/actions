@@ -2,6 +2,7 @@
 
 - [envsubst](./envsubst)
 - [kustomize](./kustomize)
+- [setup-maven](./setup-maven)
 - [setup-sphynx](./setup-sphynx)
 - [tf-check](./tf-check)
 - [tools](./tools)

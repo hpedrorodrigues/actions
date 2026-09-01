@@ -1,0 +1,32 @@
+name: Setup Maven
+author: Pedro Rodrigues
+description: Set up a specific version of Apache Maven.
+branding:
+  icon: award
+  color: gray-dark
+inputs:
+  version:
+    description: The version of Apache Maven to set up (e.g., 3.9.16).
+    required: false
+    default: 3.9.16
+  mirror-url:
+    description: >-
+      Base URL of a Maven-repository-layout mirror to download the Maven
+      distribution from (e.g., an Artifact Registry remote repository of
+      Maven Central). When set, the distribution is downloaded from
+      <mirror-url>/org/apache/maven/apache-maven/<version>/apache-maven-<version>-bin.tar.gz
+      instead of archive.apache.org.
+    required: false
+  mirror-token:
+    description: >-
+      Bearer token used to authenticate against the mirror (e.g., a GCP
+      access token for Artifact Registry).
+    required: false
+outputs:
+  path:
+    description: The path to the Maven installation.
+  version:
+    description: The version of Apache Maven that was set up.
+runs:
+  using: node24
+  main: dist/index.js
