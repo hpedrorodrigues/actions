@@ -15,13 +15,35 @@ jobs:
     steps:
       - name: Clone repository
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
+      # Keep setup-maven/package.json aligned with the release tag, so the
+      # tagged commit already carries the released version. Renovate cannot
+      # do this without being one release behind. Commits made with the
+      # default token do not trigger other workflows, so the push does not
+      # start a Checks run.
+      - name: Align package versions with the release
+        id: align
+        env:
+          VERSION: ${{ inputs.version }}
+          GIT_USER_NAME: github-actions[bot]
+          GIT_USER_EMAIL: 41898282+github-actions[bot]@users.noreply.github.com
+        run: |
+          cd setup-maven
+          npm version "${VERSION#v}" --no-git-tag-version --allow-same-version
+          cd ..
+          if ! git diff --quiet; then
+            git config user.name "${GIT_USER_NAME}"
+            git config user.email "${GIT_USER_EMAIL}"
+            git commit --all --message "chore: release ${VERSION}"
+            git push origin HEAD:main
+          fi
+          echo "sha=$(git rev-parse HEAD)" >> "${GITHUB_OUTPUT}"
       - name: Create Release
         uses: ncipollo/release-action@339a81892b84b4eeb0f6e744e4574d79d0d9b8dd # v1
         with:
           prerelease: false
           draft: false
           makeLatest: true
-          commit: ${{ github.sha }}
+          commit: ${{ steps.align.outputs.sha }}
           tag: ${{ inputs.version }}
           name: ${{ inputs.version }}
           token: ${{ github.token }}
