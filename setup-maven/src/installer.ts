@@ -1,4 +1,5 @@
 import * as core from '@actions/core'
+import * as exec from '@actions/exec'
 import * as toolCache from '@actions/tool-cache'
 import path from 'node:path'
 
@@ -15,6 +16,18 @@ export interface InstallOptions {
 
   /** Bearer token used to authenticate against the mirror. */
   mirrorToken?: string
+
+  /**
+   * When true (the default), a preinstalled Maven that matches the requested
+   * version is reused instead of downloading. When false, a preinstalled
+   * Maven fails the action.
+   */
+  skipIfInstalled?: boolean
+}
+
+interface PreinstalledMaven {
+  version: string
+  home: string
 }
 
 function downloadUrl(version: string, mirrorUrl?: string): string {
@@ -28,11 +41,36 @@ function downloadUrl(version: string, mirrorUrl?: string): string {
 }
 
 /**
+ * Finds a Maven installation that is already on the PATH.
+ *
+ * @returns The installed version and home, or null when mvn is not found.
+ */
+async function findPreinstalledMaven(): Promise<PreinstalledMaven | null> {
+  try {
+    const output = await exec.getExecOutput('mvn', ['--version'], {
+      silent: true,
+      ignoreReturnCode: true
+    })
+
+    const version = output.stdout.match(/^Apache Maven (\S+)/m)?.[1]
+    const home = output.stdout.match(/^Maven home: (.+)$/m)?.[1]
+
+    if (version && home) {
+      return { version, home: home.trim() }
+    }
+  } catch {
+    // mvn is not on the PATH.
+  }
+
+  return null
+}
+
+/**
  * Installs the given version of Apache Maven, using the runner tool cache
  * when possible.
  *
  * @param version The Maven version to install (e.g., 3.9.16).
- * @param options Optional mirror configuration.
+ * @param options Optional mirror and preinstalled-Maven configuration.
  * @returns The path to the Maven installation.
  */
 export async function installMaven(
@@ -42,6 +80,27 @@ export async function installMaven(
   if (!/^\d+\.\d+\.\d+$/.test(version)) {
     throw new Error(
       `Invalid Maven version "${version}". Expected a full version such as 3.9.16.`
+    )
+  }
+
+  const preinstalled = await findPreinstalledMaven()
+  if (preinstalled) {
+    if (options.skipIfInstalled === false) {
+      throw new Error(
+        `Maven ${preinstalled.version} is already installed at ${preinstalled.home} and skip-if-installed is false. ` +
+          'Remove Maven from the runner image, or set skip-if-installed to true.'
+      )
+    }
+
+    if (preinstalled.version === version) {
+      core.info(
+        `Found Maven ${version} already installed at ${preinstalled.home}`
+      )
+      return preinstalled.home
+    }
+
+    core.info(
+      `Ignoring preinstalled Maven ${preinstalled.version}: version ${version} was requested.`
     )
   }
 

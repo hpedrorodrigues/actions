@@ -7,7 +7,7 @@ on:
   pull_request:
 
 jobs:
-  checks:
+  shell-actions-check:
     runs-on: ubuntu-latest
     steps:
       - name: Clone repository
@@ -19,7 +19,7 @@ jobs:
       - name: Run tests
         run: bats --print-output-on-failure --timing --recursive .
         shell: sh
-  setup-maven:
+  setup-maven-check:
     runs-on: ubuntu-latest
     defaults:
       run:

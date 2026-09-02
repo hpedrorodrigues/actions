@@ -46,9 +46,9 @@ export default [
 
       parserOptions: {
         projectService: {
+          // allowDefaultProject is capped at 8 files, so __fixtures__ and
+          // __tests__ carry their own tsconfig.json instead.
           allowDefaultProject: [
-            '__fixtures__/*.ts',
-            '__tests__/*.ts',
             'eslint.config.mjs',
             'jest.config.js',
             'rollup.config.ts'
