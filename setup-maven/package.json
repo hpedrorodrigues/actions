@@ -1,7 +1,7 @@
 {
   "name": "setup-maven",
   "description": "GitHub Action to set up a specific version of Apache Maven",
-  "version": "1.0.7",
+  "version": "1.0.8",
   "author": "Pedro Rodrigues",
   "type": "module",
   "private": true,
