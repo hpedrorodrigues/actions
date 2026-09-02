@@ -15,6 +15,11 @@ jobs:
     steps:
       - name: Clone repository
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
+        with:
+          # The default token cannot push to main: the branch ruleset requires
+          # status checks, and only repository admins bypass it. This token is
+          # a fine-grained PAT of the repository owner (Contents: read/write).
+          token: ${{ secrets.RELEASE_TOKEN }}
       # Keep setup-maven/package.json aligned with the release tag, so the
       # tagged commit already carries the released version. Renovate cannot
       # do this without being one release behind. Commits made with the
