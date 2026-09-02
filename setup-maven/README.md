@@ -1,74 +1,53 @@
 # Setup Maven
 
-Set up a specific version of [Apache Maven](https://maven.apache.org).
-
-This action downloads the requested version from the [Apache archive](https://archive.apache.org/dist/maven) (or from a mirror), stores it in the [runner tool cache](https://github.com/actions/toolkit/tree/main/packages/tool-cache), adds `mvn` to the `PATH`, and exports `MAVEN_HOME`. It can also generate a `~/.m2/settings.xml`.
-
-By default a preinstalled Maven that matches the requested version is reused and nothing is downloaded, while a different preinstalled version is ignored and the requested one is installed. Set `skip-if-installed: false` to instead fail when any Maven is already installed on the runner, as a tripwire for runner-image drift and to guarantee the binary comes from this action. Note that GitHub-hosted runners such as `ubuntu-latest` ship with Maven preinstalled, so `false` only suits runner images without Maven.
+Action to set up a specific version of [Apache Maven].
 
 ## Usage
 
 ```yaml
-- name: Set up Maven
-  uses: hpedrorodrigues/actions/setup-maven@v1.0.7
+- uses: hpedrorodrigues/actions/setup-maven@v1.0.7
   with:
-    version: 3.9.16
+    # The version of Apache Maven to set up.
+    # (default: 3.9.16)
+    version: ''
 
-- name: Build
-  run: mvn --batch-mode verify
+    # Base URL of a Maven-repository-layout mirror to download the Maven
+    # distribution from (e.g., an Artifact Registry remote repository of
+    # Maven Central). The distribution is downloaded from
+    # <mirror-url>/org/apache/maven/apache-maven/<version>/apache-maven-<version>-bin.tar.gz.
+    mirror-url: ''
+
+    # Bearer token used to authenticate against the mirror.
+    # Registered as a secret so it never appears in logs.
+    mirror-token: ''
+
+    # Whether to reuse a preinstalled Maven that matches the requested
+    # version. If false, the action fails when any Maven is already
+    # installed on the runner.
+    # (default: true)
+    skip-if-installed: ''
+
+    # Servers for the generated settings.xml (JSON array).
+    # Reference credentials as ${env.NAME} instead of literal values.
+    settings-servers: ''
+
+    # Mirrors for the generated settings.xml (JSON array).
+    settings-mirrors: ''
+
+    # Properties for the generated settings.xml (JSON array of one-key
+    # objects), rendered in a profile that is active by default.
+    settings-properties: ''
+
+    # Path of the generated settings.xml.
+    # (default: $HOME/.m2/settings.xml)
+    settings-path: ''
+
+    # Whether to overwrite an existing settings.xml.
+    # (default: true)
+    settings-override: ''
 ```
 
-### Using a mirror
-
-Set `mirror-url` to download the Maven distribution from a Maven-repository-layout mirror instead of archive.apache.org (e.g., an Artifact Registry remote repository of Maven Central, to avoid rate limits on shared egress IPs). The distribution is fetched from `<mirror-url>/org/apache/maven/apache-maven/<version>/apache-maven-<version>-bin.tar.gz`.
-
-```yaml
-- name: Set up Maven
-  uses: hpedrorodrigues/actions/setup-maven@v1.0.7
-  with:
-    version: 3.9.16
-    mirror-url: https://us-central1-maven.pkg.dev/my-project/remote-maven-central
-    mirror-token: ${{ steps.auth.outputs.access_token }}
-```
-
-`mirror-token` is optional and is sent as an `Authorization: Bearer` header. It is registered as a secret so it never appears in logs.
-
-### Generating settings.xml
-
-The `settings-*` inputs generate a `settings.xml` so that dependency resolution also goes through a mirror or authenticated repository. Servers, mirrors, and properties are JSON arrays with the same shape as their [settings.xml](https://maven.apache.org/settings.html) elements. The generated file is removed when the job ends.
-
-```yaml
-- name: Set up Maven
-  uses: hpedrorodrigues/actions/setup-maven@v1.0.7
-  with:
-    mirror-url: https://us-central1-maven.pkg.dev/my-project/remote-maven-central
-    mirror-token: ${{ steps.auth.outputs.access_token }}
-    settings-servers: |
-      [{"id": "remote-maven-central", "username": "oauth2accesstoken", "password": "${env.AR_TOKEN}"}]
-    settings-mirrors: |
-      [{"id": "remote-maven-central", "mirrorOf": "central", "url": "https://us-central1-maven.pkg.dev/my-project/remote-maven-central"}]
-
-- name: Build
-  run: mvn --batch-mode verify
-  env:
-    AR_TOKEN: ${{ steps.auth.outputs.access_token }}
-```
-
-Do not put credentials directly into `settings-servers`: reference an environment variable with `${env.NAME}` instead, and set that variable only on the steps that run `mvn`. This keeps the token out of the file on disk.
-
-## Inputs
-
-| Name                  | Description                                                                | Required | Default                  |
-| --------------------- | -------------------------------------------------------------------------- | -------- | ------------------------ |
-| `version`             | The version of Apache Maven to set up                                      | No       | `3.9.16`                 |
-| `mirror-url`          | Base URL of a Maven-repository-layout mirror for the distribution download | No       |                          |
-| `mirror-token`        | Bearer token used to authenticate against the mirror                       | No       |                          |
-| `skip-if-installed`   | Reuse a matching preinstalled Maven instead of failing                     | No       | `true`                   |
-| `settings-servers`    | Servers for the generated settings.xml (JSON array)                        | No       |                          |
-| `settings-mirrors`    | Mirrors for the generated settings.xml (JSON array)                        | No       |                          |
-| `settings-properties` | Properties for the generated settings.xml (JSON array of one-key objects)  | No       |                          |
-| `settings-path`       | Path of the generated settings.xml                                         | No       | `$HOME/.m2/settings.xml` |
-| `settings-override`   | Overwrite an existing settings.xml                                         | No       | `true`                   |
+The generated settings.xml is removed when the job ends.
 
 ## Outputs
 
@@ -76,6 +55,99 @@ Do not put credentials directly into `settings-servers`: reference an environmen
 | --------- | ------------------------------------------- |
 | `path`    | The path to the Maven installation          |
 | `version` | The version of Apache Maven that was set up |
+
+## Scenarios
+
+- [Set up the default Maven version](#set-up-the-default-maven-version)
+- [Set up a specific Maven version](#set-up-a-specific-maven-version)
+- [Download the distribution through a mirror](#download-the-distribution-through-a-mirror)
+- [Fail when Maven is preinstalled](#fail-when-maven-is-preinstalled)
+- [Resolve dependencies through a mirror](#resolve-dependencies-through-a-mirror)
+- [Set build properties](#set-build-properties)
+- [Write settings.xml to a custom path](#write-settingsxml-to-a-custom-path)
+- [Use the outputs](#use-the-outputs)
+
+### Set up the default Maven version
+
+```yaml
+- uses: hpedrorodrigues/actions/setup-maven@v1.0.7
+
+- run: mvn --batch-mode verify
+```
+
+### Set up a specific Maven version
+
+```yaml
+- uses: hpedrorodrigues/actions/setup-maven@v1.0.7
+  with:
+    version: 3.8.8
+```
+
+### Download the distribution through a mirror
+
+```yaml
+- uses: hpedrorodrigues/actions/setup-maven@v1.0.7
+  with:
+    mirror-url: https://us-central1-maven.pkg.dev/my-project/remote-maven-central
+    mirror-token: ${{ steps.auth.outputs.access_token }}
+```
+
+### Fail when Maven is preinstalled
+
+GitHub-hosted runners ship with Maven preinstalled, so this only suits runner images without Maven.
+
+```yaml
+- uses: hpedrorodrigues/actions/setup-maven@v1.0.7
+  with:
+    skip-if-installed: false
+```
+
+### Resolve dependencies through a mirror
+
+The mirror inputs only cover the Maven distribution itself. Dependency resolution goes through the generated settings.xml, with the token exported only on the steps that run mvn.
+
+```yaml
+- uses: hpedrorodrigues/actions/setup-maven@v1.0.7
+  with:
+    settings-servers: |
+      [{"id": "remote-maven-central", "username": "oauth2accesstoken", "password": "${env.AR_TOKEN}"}]
+    settings-mirrors: |
+      [{"id": "remote-maven-central", "mirrorOf": "central", "url": "https://us-central1-maven.pkg.dev/my-project/remote-maven-central"}]
+
+- run: mvn --batch-mode verify
+  env:
+    AR_TOKEN: ${{ steps.auth.outputs.access_token }}
+```
+
+### Set build properties
+
+```yaml
+- uses: hpedrorodrigues/actions/setup-maven@v1.0.7
+  with:
+    settings-properties: |
+      [{"revision": "1.2.3"}, {"maven.test.skip": "true"}]
+```
+
+### Write settings.xml to a custom path
+
+```yaml
+- uses: hpedrorodrigues/actions/setup-maven@v1.0.7
+  with:
+    settings-mirrors: |
+      [{"id": "corporate", "mirrorOf": "central", "url": "https://repo.example.com/maven2"}]
+    settings-path: /home/runner/custom/settings.xml
+    settings-override: false
+```
+
+### Use the outputs
+
+```yaml
+- uses: hpedrorodrigues/actions/setup-maven@v1.0.7
+  id: maven
+
+- run: |
+    echo "Maven ${{ steps.maven.outputs.version }} installed at ${{ steps.maven.outputs.path }}"
+```
 
 ## Development
 
@@ -86,4 +158,6 @@ npm run all # format, lint, test, and bundle to dist/
 
 The compiled `dist/` directory is committed. GitHub runs the action from it directly, so rebuild it after any change to `src/`.
 
-To run the action locally, copy `.env.example` to `.env`, set `INPUT_VERSION`, `RUNNER_TOOL_CACHE`, and `RUNNER_TEMP`, and run `npm run local-action`.
+To run the action locally, copy `.env.example` to `.env`, set the desired `INPUT_*` values plus `RUNNER_TOOL_CACHE` and `RUNNER_TEMP`, and run `npm run local-action`.
+
+[Apache Maven]: https://maven.apache.org
