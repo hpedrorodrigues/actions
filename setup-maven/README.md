@@ -5,7 +5,7 @@ Action to set up a specific version of [Apache Maven].
 ## Usage
 
 ```yaml
-- uses: hpedrorodrigues/actions/setup-maven@v1.0.7
+- uses: hpedrorodrigues/actions/setup-maven@v1.0.8
   with:
     # The version of Apache Maven to set up.
     # (default: 3.9.16)
@@ -70,7 +70,7 @@ The generated settings.xml is removed when the job ends.
 ### Set up the default Maven version
 
 ```yaml
-- uses: hpedrorodrigues/actions/setup-maven@v1.0.7
+- uses: hpedrorodrigues/actions/setup-maven@v1.0.8
 
 - run: mvn --batch-mode verify
 ```
@@ -78,7 +78,7 @@ The generated settings.xml is removed when the job ends.
 ### Set up a specific Maven version
 
 ```yaml
-- uses: hpedrorodrigues/actions/setup-maven@v1.0.7
+- uses: hpedrorodrigues/actions/setup-maven@v1.0.8
   with:
     version: 3.8.8
 ```
@@ -86,7 +86,7 @@ The generated settings.xml is removed when the job ends.
 ### Download the distribution through a mirror
 
 ```yaml
-- uses: hpedrorodrigues/actions/setup-maven@v1.0.7
+- uses: hpedrorodrigues/actions/setup-maven@v1.0.8
   with:
     mirror-url: https://us-central1-maven.pkg.dev/my-project/remote-maven-central
     mirror-token: ${{ steps.auth.outputs.access_token }}
@@ -97,7 +97,7 @@ The generated settings.xml is removed when the job ends.
 GitHub-hosted runners ship with Maven preinstalled, so this only suits runner images without Maven.
 
 ```yaml
-- uses: hpedrorodrigues/actions/setup-maven@v1.0.7
+- uses: hpedrorodrigues/actions/setup-maven@v1.0.8
   with:
     skip-if-installed: false
 ```
@@ -107,7 +107,7 @@ GitHub-hosted runners ship with Maven preinstalled, so this only suits runner im
 The mirror inputs only cover the Maven distribution itself. Dependency resolution goes through the generated settings.xml, with the token exported only on the steps that run mvn.
 
 ```yaml
-- uses: hpedrorodrigues/actions/setup-maven@v1.0.7
+- uses: hpedrorodrigues/actions/setup-maven@v1.0.8
   with:
     settings-servers: |
       [{"id": "remote-maven-central", "username": "oauth2accesstoken", "password": "${env.AR_TOKEN}"}]
@@ -122,7 +122,7 @@ The mirror inputs only cover the Maven distribution itself. Dependency resolutio
 ### Set build properties
 
 ```yaml
-- uses: hpedrorodrigues/actions/setup-maven@v1.0.7
+- uses: hpedrorodrigues/actions/setup-maven@v1.0.8
   with:
     settings-properties: |
       [{"revision": "1.2.3"}, {"maven.test.skip": "true"}]
@@ -131,7 +131,7 @@ The mirror inputs only cover the Maven distribution itself. Dependency resolutio
 ### Write settings.xml to a custom path
 
 ```yaml
-- uses: hpedrorodrigues/actions/setup-maven@v1.0.7
+- uses: hpedrorodrigues/actions/setup-maven@v1.0.8
   with:
     settings-mirrors: |
       [{"id": "corporate", "mirrorOf": "central", "url": "https://repo.example.com/maven2"}]
@@ -142,7 +142,7 @@ The mirror inputs only cover the Maven distribution itself. Dependency resolutio
 ### Use the outputs
 
 ```yaml
-- uses: hpedrorodrigues/actions/setup-maven@v1.0.7
+- uses: hpedrorodrigues/actions/setup-maven@v1.0.8
   id: maven
 
 - run: |
