@@ -1,0 +1,65 @@
+name: Setup Maven
+author: Pedro Rodrigues
+description: Set up a specific version of Apache Maven.
+branding:
+  icon: award
+  color: gray-dark
+inputs:
+  version:
+    description: The version of Apache Maven to set up (e.g., 3.9.16).
+    required: false
+    default: 3.9.16
+  mirror-url:
+    description: >-
+      Base URL of a Maven-repository-layout mirror to download the Maven
+      distribution from (e.g., an Artifact Registry remote repository of
+      Maven Central). When set, the distribution is downloaded from
+      <mirror-url>/org/apache/maven/apache-maven/<version>/apache-maven-<version>-bin.tar.gz
+      instead of archive.apache.org.
+    required: false
+  mirror-token:
+    description: >-
+      Bearer token used to authenticate against the mirror (e.g., a GCP
+      access token for Artifact Registry).
+    required: false
+  skip-if-installed:
+    description: >-
+      When true, a preinstalled Maven that matches the requested version is
+      reused and nothing is downloaded. When false, the action fails if any
+      Maven is already installed on the runner.
+    required: false
+    default: 'true'
+  settings-servers:
+    description: >-
+      Servers for the generated settings.xml, as a JSON array. Example:
+      [{"id": "serverId", "username": "username", "password": "password"}].
+      Nested objects render as nested XML elements.
+    required: false
+  settings-mirrors:
+    description: >-
+      Mirrors for the generated settings.xml, as a JSON array. Example:
+      [{"id": "mirrorId", "name": "name", "mirrorOf": "central", "url": "url"}].
+    required: false
+  settings-properties:
+    description: >-
+      Properties for the generated settings.xml, as a JSON array of one-key
+      objects. Example: [{"propertyName": "propertyValue"}]. Rendered in a
+      profile that is active by default.
+    required: false
+  settings-path:
+    description: >-
+      Path of the generated settings.xml. Defaults to $HOME/.m2/settings.xml.
+    required: false
+  settings-override:
+    description: Overwrite an existing settings.xml file.
+    required: false
+    default: 'true'
+outputs:
+  path:
+    description: The path to the Maven installation.
+  version:
+    description: The version of Apache Maven that was set up.
+runs:
+  using: node24
+  main: dist/index.js
+  post: dist/post.js
