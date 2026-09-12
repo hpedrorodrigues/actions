@@ -8,7 +8,7 @@ runs:
   using: composite
   steps:
     - name: Set up Homebrew
-      uses: Homebrew/actions/setup-homebrew@49d03f1bf5d455a413dfbdf99e6718054a4cd975 # master
+      uses: Homebrew/actions/setup-homebrew@7f791ee8209b4ed73dd5564b92fea6998e22f5c5 # master
     - name: Install Sphynx
       run: brew install hpedrorodrigues/tools/sphynx
       shell: sh
