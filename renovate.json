@@ -2,6 +2,7 @@
   "$schema": "https://docs.renovatebot.com/renovate-schema.json",
   "extends": ["config:recommended", "helpers:pinGitHubActionDigests"],
   "labels": ["dependencies"],
+  "postUpdateOptions": ["npmInstallTwice"],
   "ignorePaths": [
     "**/node_modules/**",
     "**/bower_components/**",
